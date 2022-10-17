@@ -1,9 +1,9 @@
 import { schedule, startDateTime } from '~~/conference';
 
 function useCurrentReplayDate() {
-	const ellapsed = useReplayCurrentTime()
+	const elapsed = useReplayCurrentTime()
 	return computed(() => {
-		return new Date(startDateTime.getTime() + ellapsed.value * 1000);
+		return new Date(startDateTime.getTime() + elapsed.value * 1000);
 	});
 }
 
