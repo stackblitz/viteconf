@@ -23,16 +23,18 @@ const share = async () => {
 	let tweetText: string;
 	let url: string;
 
+	const baseUrl = isLive ? 'https://viteconf.org/live' : 'https://viteconf.org/2022/replay';
+
 	if (!talk.speaker || talk.speaker.displayName === 'TBD') {
-		tweetText = `I am watching ViteConf live! Come watch!`;
-		url = 'https://viteconf.org/live';
+		tweetText = isLive ? `I am watching ViteConf live! Come watch!` : ``;
+		url = baseUrl;
 	} else {
 		const messages = liveTwitterMessagesShareTalk;
 		const message =
 			messages[Math.floor(Math.random() * messages.length)] ?? messages[0];
 
 		tweetText = message(talk.speaker);
-		url = 'https://viteconf.org/live?talk=' + talkTitleToSlug(talk.title);
+		url = `${baseUrl}?talk=${talkTitleToSlug(talk.title)}`;
 	}
 
 	const twitterUrl = `https://twitter.com/intent/tweet?url=${url}&text=${tweetText}`;
@@ -41,7 +43,7 @@ const share = async () => {
 };
 
 function getDiscordChatLink() {
-	return `${discordProtocol ? 'discord://' : 'https://'}${discordLink}`;
+	return `${discordProtocol ? 'discord://' : 'https://'}${talk.speaker?.chat ?? (talk.participants?.[0].chat ?? discordLink) }`;
 }
 
 let timeout;

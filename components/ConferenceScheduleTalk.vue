@@ -58,11 +58,17 @@ onMounted(async () => {
 	}
 });
 
+function formatTimeFromSeconds(seconds: number) {
+	const hours = Math.floor(seconds/(60*60))
+	const minutes = Math.floor((seconds - hours*60*60)/60)
+	return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
+}
+
 const talkStartTime = $computed(() => {
-	return toTalkStartTime(talk.start)
+	return replay ? formatTimeFromSeconds(talk.time) : toTalkStartTime(talk.start)
 });
 const talkLocalStartTime = $computed(() => {
-	return toTalkStartLocaleTime(talk.start)
+	return replay ? formatTimeFromSeconds(talk.time) : toTalkStartLocaleTime(talk.start)
 });
 
 </script>
@@ -96,7 +102,7 @@ const talkLocalStartTime = $computed(() => {
 			#
 		</a>
 
-		<div :style="{ opacity: replay ? 0 : 1 }" class="time-container" :class="{ blank: isBlank(talk) }">
+		<div class="time-container" :class="{ blank: isBlank(talk) }">
 			<p
 				class="time"
 				v-if="!isBlank(talk) && talk.start"

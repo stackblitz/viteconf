@@ -1012,98 +1012,115 @@ export const mcs = processSpeakers({
 	},
 });
 
+function t(time: string): number {
+	const [hours,minutes,seconds] = time.split(':')
+	return ((+hours)*60+(+minutes))*60+(+seconds)
+}
+
 export const talks = processTalks({
 	viteKeynote: {
 		title: 'Keynote: How Vite Came to Be',
 		speaker: speakers['yyx990803'],
 		duration: 28,
+		time: t(`00:13:16`)
 	},
 	viteEcosystem: {
 		title: 'The Vite Ecosystem',
 		speaker: speakers['patak-dev'],
 		duration: 18, // 60sec
+		time: t(`00:42:35`)
 	},
 	viteDX: {
 		title: 'Vite, on-demand DX',
 		speaker: speakers.antfu,
 		duration: 10, // 50sec
+		time: t(`01:00:20`)
 	},
 	vike: {
 		title: 'Vike, Build Your Own Framework',
 		speaker: speakers.brillout,
 		duration: 4, // 60sec
+		time: t(`06:49:06`)
 	},
 	fastifyDX: {
 		title: 'Rethinking the Full Stack Framework',
 		speaker: speakers.galvez,
 		duration: 4, // 60sec
-	},
-	buildYourOwnFramework: {
-		title: 'Your Own App Architecture Discussion',
-		participants: [speakers.brillout, speakers.galvez],
-		duration: 16, // 60sec
+		time: t(`06:57:05`)
 	},
 	stackblitzKeynote: {
 		title: 'StackBlitz Keynote',
 		participants: [speakers.sylwiavargas, speakers.sulco, speakers.ericsimons],
 		duration: 32, // 60sec
+		time: t(`02:16:05`)
 	},
 	storybook: {
 		title: 'Developing, Documenting, and Testing your Vite app with Storybook',
 		ticketTitle: 'Your Vite app with Storybook',
 		speaker: speakers.ianvs,
 		duration: 21, // 60sec
+		time: t(`02:52:30`)
 	},
 	histoire: {
 		title: 'Introduction to Histoire',
 		speaker: speakers.hugoattal,
 		duration: 6, // 60sec
+		time: t(`03:13:16`)
 	},
 	ladle: {
 		title: 'Introducing Ladle: Develop and test your React stories faster',
 		shortTitle: 'Introducing Ladle',
 		speaker: speakers.tajo,
 		duration: 6, // 60sec
+		time: t(`03:19:30`)
 	},
 	nx: {
 		title: 'High Speed Monorepos with high-quality DX',
 		speaker: speakers.juristr,
 		duration: 6, // 60sec
+		time: t(`03:25:14`)
 	},
 	pnpm: {
 		title: 'What makes pnpm performant',
 		speaker: speakers.zkochan,
 		duration: 22, // 30sec
+		time: t(`03:30:55`)
 	},
 	vitepress: {
 		title: 'Deep Dive into VitePress',
 		speaker: speakers.kiaking,
 		duration: 30, // 30sec
+		time: t(`01:32:20`)
 	},
 	sveltekit: {
 		title: 'SvelteKit',
 		speaker: speakers['rich-harris'],
 		duration: 17, // 30sec
+		time: t(`03:55:35`)
 	},
 	nuxt: {
 		title: 'How Vite Makes Nuxt Possible',
 		speaker: speakers.danielroe,
 		duration: 26, // 60sec
+		time: t(`04:12:12`)
 	},
 	angular: {
 		title: 'Vite, Meta-Frameworks, and Angular',
 		speaker: speakers.brandonroberts,
 		duration: 18, // 20sec
+		time: t(`04:37:57`)
 	},
 	astro: {
 		title: 'Islands Architecture, Astro, and You',
 		speaker: speakers['natemoo-re'],
 		duration: 22, // 50sec
+		time: t(`04:55:45`)
 	},
 	rakkas: {
 		title: 'Rakkas: React apps with no API layer',
 		speaker: speakers.cyco130,
 		duration: 6, // 60sec
+		time: t(`05:18:30`)
 	},
 	frameworksPanel: {
 		title: 'Frameworks Panel',
@@ -1117,16 +1134,19 @@ export const talks = processTalks({
 			speakers.jtomchak,
 		],
 		duration: 46, // 120sec
+		time: t(`05:31:04`)
 	},
 	netlify: {
 		title: 'Vite SSR at Netlify Edge',
 		speaker: speakers.ascorbic,
 		duration: 5, // 30sec
+		time: t(`06:21:30`)
 	},
 	vercel: {
 		title: 'Vite and Vercel',
 		speaker: speakers.leerob,
 		duration: 3, // 30sec
+		time: t(`06:26:44`)
 	},
 	firebase: {
 		title:
@@ -1134,16 +1154,19 @@ export const talks = processTalks({
 		shortTitle: 'Vite + Firebase',
 		speaker: speakers.davideast,
 		duration: 6, // 60sec
+		time: t(`06:35:35`)
 	},
 	awsAmplify: {
 		title: 'Vite + AWS Amplify',
 		speaker: speakers.josefaidt,
 		duration: 6, // 60sec
+		time: t(`06:29:55`)
 	},
 	laravel: {
 		title: 'Unlimited power with Laravel and Vite!',
 		speaker: speakers.jessarcher,
 		duration: 12, // 30sec
+		time: t(`07:03:20`)
 	},
 	viteRuby: {
 		title:
@@ -1151,79 +1174,94 @@ export const talks = processTalks({
 		shortTitle: 'Frontend Joy in Ruby on Rails',
 		speaker: speakers.elmassimo,
 		duration: 12, // 40sec
+		time: t(`07:15:38`)
 	},
 	cypress: {
 		title: 'Cypress Component Testing',
 		speaker: speakers.jessicasachs,
 		duration: 22, // 40sec
+		time: t(`07:27:47`)
 	},
 	playwright: {
 		title: 'Component Testing with Playwright',
 		speaker: speakers['debs-obrien'],
 		duration: 20, // 30sec
+		time: t(`07:49:57`)
 	},
 	vitest: {
 		title: 'Vitest, testing DX reimagined',
 		speaker: speakers['sheremet-va'],
 		duration: 20, // 20sec
+		time: t(`08:10:05`)
 	},
 	solidStart: {
 		title: 'SolidJS: Getting Started',
 		speaker: speakers.ryansolid,
 		duration: 21, // 50sec
+		time: t(`08:33:04`)
 	},
 	marko: {
 		title: '0kb JS and Back Again: why Vite is the future of the MPA',
 		ticketTitle: 'Why Vite is the future of the MPA',
 		speaker: speakers.dylanpiercey,
 		duration: 17, // 20sec
+		time: t(`08:54:07`)
 	},
 	hydrogen: {
 		title: 'Headless commerce with Shopify/Hydrogen and Vite',
 		ticketTitle: 'Shopify/Hydrogen and Vite',
 		speaker: speakers.frandiox,
 		duration: 21, // 25sec
+		time: t(`09:11:30`)
 	},
 	qwik: {
 		title: 'Qwik City: Reimagined meta-framework for the edge',
 		speaker: speakers.adamdbradley,
 		duration: 20, // 60sec
+		time: t(`09:31:50`)
 	},
 	eleventy: {
 		title: 'DIY Islands Architecture with Vite',
 		speaker: speakers.bholmesdev,
 		duration: 8, // 50sec
+		time: t(`09:52:12`)
 	},
 	bun: {
 		title: 'Bun + Vite',
 		speaker: speakers['jarred-sumner'],
 		duration: 3, // 60sec
+		time: t(`06:41:40`)
 	},
 	deno: {
 		title: 'Deno + Vite',
 		speaker: speakers.bartlomieju,
 		duration: 5, // 60sec
+		time: t(`06:44:38`)
 	},
-	viteCore: {
-		title: 'Contributing 101',
+	contributing101: {
+		title: 'Vite Core, Contributing 101',
 		speaker: speakers.bluwy,
 		duration: 16, // 60sec
+		time: t(`10:02:02`)
 	},
-	vite3: {
+	vueAndVite: {
 		title: `Vue's Road to Vite`,
 		speaker: speakers.sodatea,
 		duration: 21, // 50sec
+		time: t(`10:23:30`)
 	},
 	rollup: {
 		title: 'The hashing dilemma, Rollup 3, and our future with Vite',
 		ticketTitle: 'Rollup 3, and our future with Vite',
 		speaker: speakers.lukastaegert,
 		duration: 19, // 60sec
+		time: t(`01:10:15`)
 	},
 	viteEcosystemCI: {
 		title: 'vite-ecosystem-ci',
 		speaker: speakers.dominikg,
 		duration: 9, // 30sec
+		time: t(`10:44:28`)
 	},
 	vitePanel: {
 		title: 'Vite Panel',
@@ -1237,23 +1275,27 @@ export const talks = processTalks({
 			speakers.ladyleet,
 		],
 		duration: 46, // 120sec
+		time: t(`10:52:10`)
 	},
 	tauri: {
 		title: 'Tauri: Building better apps for a better future',
 		ticketTitle: 'Tauri',
 		speaker: speakers.jonaskruckenberg,
 		duration: 6, // 60sec
+		time: t(`05:24:34`)
 	},
 	openSource: {
 		title: 'Things learned from Vite contributions',
 		speaker: speakers.bdougie,
 		duration: 5,
+		time: t(`10:17:52`)
 	},
 	education: {
 		title: 'Vite for Education: Vite in Vite to teach Vite and beyond',
 		ticketTitle: 'Vite for Education',
 		speaker: speakers.jutanium,
 		duration: 14, // 40sec
+		time: t(`02:02:30`)
 	},
 });
 
@@ -1311,61 +1353,73 @@ export const glue = {
 		title: 'Welcome to ViteConf',
 		participants: [mcs.brittneypostma, speakers['patak-dev']],
 		duration: 13,
+		time: t(`00:00:00`)
 	},
 	afterKeynote: {
 		title: 'Vite Section',
 		speaker: speakers.ericsimons,
 		duration: 4,
+		time: t(`00:41:40`)
 	},
 	docsIntro: {
 		title: 'Docs Section',
 		speaker: speakers.sylwiavargas,
 		duration: 3,
+		time: t(`01:29:45`)
 	},
 	diyIntro: {
 		title: 'DIY Section',
 		speaker: speakers.bholmesdev,
 		duration: 3,
+		time: t(`06:51:17`)
 	},
 	designSystemsIntro: {
 		title: 'Design Systems Section',
 		speaker: mcs.josefineschaefer,
 		duration: 4,
+		time: t(`02:48:20`)
 	},
 	frameworksIntro: {
 		title: 'Frameworks Section',
 		speaker: mcs.theobr,
 		duration: 4,
+		time: t(`03:53:46`)
 	},
 	frameworks2Intro: {
 		title: 'Frameworks Section',
 		speaker: speakers.jutanium,
 		duration: 3,
+		time: t(`08:30:55`)
 	},
 	backendIntro: {
 		title: 'Backend Integrations Section',
 		speaker: speakers.lindsaykwardell,
 		duration: 2,
+		time: t(`07:02:00`)
 	},
 	testingIntro: {
 		title: 'Testing Section',
 		speaker: mcs.stolinski,
 		duration: 3,
+		time: t(`07:26:40`)
 	},
 	hostingIntro: {
 		title: 'Hosting and Edge Section',
 		speaker: mcs.jlengstorf,
 		duration: 7,
+		time: t(`06:18:29`)
 	},
 	vite2Intro: {
 		title: 'Vite and Contributing Section',
 		speaker: mcs.surma,
 		duration: 4,
+		time: t(`09:59:01`)
 	},
 	closing: {
 		title: 'ViteConf 2022',
 		participants: [mcs.brittneypostma, speakers['patak-dev']],
 		duration: 14,
+		time: t(`11:34:56`)
 	},
 };
 
@@ -1462,9 +1516,9 @@ export const schedule = augmentSchedule([
 		title: 'Vite Core',
 		talks: [
 			glue.vite2Intro,
-			talks.viteCore,
+			talks.contributing101,
 			talks.openSource,
-			talks.vite3,
+			talks.vueAndVite,
 			talks.viteEcosystemCI,
 		],
 	},
@@ -1585,18 +1639,16 @@ export const twitterMessagesFromSpeaker = [
 
 export const liveTwitterMessagesShareTalk = [
 	(username: SpeakerData) =>
-		`I am watching ${pluralizeUserDisplayName(username.displayName)}'s talk: ${
+		`I'm watching ${pluralizeUserDisplayName(username.displayName)}'s @ViteConf talk: ${
 			username.talk.title
-		} at @ViteConf! Come watch!`,
+		}. Check it out here!`,
 ];
 
-function advanceMinutes(date: Date, minutes: number) {
-	return new Date(date.getTime() + minutes * 60000);
+function advanceSeconds(date: Date, seconds: number) {
+	return new Date(date.getTime() + seconds * 1000);
 }
 
 function augmentSchedule(schedule: ScheduleData[]) {
-	let time = 0;
-
 	return schedule.map((section) => {
 		if (!section) return;
 
@@ -1605,10 +1657,8 @@ function augmentSchedule(schedule: ScheduleData[]) {
 			talks: section.talks.map((talk) => {
 				if (!talk) return;
 
-				talk.time = time;
-				talk.start = advanceMinutes(startDateTime, time);
-				time += talk.duration;
-
+				talk.start = advanceSeconds(startDateTime, talk.time);
+				
 				return talk;
 			}),
 		};

@@ -53,7 +53,7 @@ onMounted(() => {
 		player = new YT.Player('player', {
 			height: '730',
 			width: '1120',
-			videoId: 'VvP24dN-ZmY',
+			videoId: 'Znd11rVHQOE',
 			playerVars: {
 				'playsinline': 1,
 				'autoplay': 1,
