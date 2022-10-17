@@ -1,5 +1,26 @@
-<script setup>
-let replayCurrentTime = $(useReplayCurrentTime())
+<script setup lang="ts">
+let replayCurrentTime = $(useReplayCurrentTime());
+let player;
+
+const route = useRoute();
+let tQuery = (route.query.t as string)?.toLowerCase();
+function tExtract(t: string, re: RegExp) {
+	return +t.match(re)?.[1] ?? 0
+}
+function tToSeconds(t: string) {
+	const hours = tExtract(t, /(\d+)h/);
+	const minutes = tExtract(t, /(\d+)m/);
+	const seconds = tExtract(t,/(\d+)s/);
+	console.log({ t, hours, minutes, seconds });
+	return (hours * 60 + minutes) * 60 + seconds;
+}
+
+function goToTime(seconds: number) {
+	if (player) {
+		player.seekTo(seconds)
+	}
+}
+
 
 onMounted(() => {
 	
@@ -12,8 +33,6 @@ onMounted(() => {
 
 	// 3. This function creates an <iframe> (and YouTube player)
 	//    after the API code downloads.
-	let player;
-
 	function onReady(event) {
 		event.target.playVideo();
 	}
@@ -28,13 +47,17 @@ onMounted(() => {
 			done = false;
 		}
 	}
+	console.log(tQuery ? tToSeconds(tQuery) : 0);
+
 	window.onYouTubeIframeAPIReady = () => {
 		player = new YT.Player('player', {
 			height: '730',
 			width: '1120',
 			videoId: 'VvP24dN-ZmY',
 			playerVars: {
-				'playsinline': 1
+				'playsinline': 1,
+				'autoplay': 1,
+				'start': tQuery ? tToSeconds(tQuery) : 0,
 			},
 			events: {
 				onReady,
