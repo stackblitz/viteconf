@@ -25,3 +25,7 @@ This is the main development repository for the ViteConf 2022 online conference 
 - 🔑 Fully Typed APIs
 
 To get started developing the website, we recommend using the "Start new PR" button above to open a fresh production-ready environment in [StackBlitz Codeflow](https://stackblitz.com/codeflow).
+
+## License
+
+MIT
