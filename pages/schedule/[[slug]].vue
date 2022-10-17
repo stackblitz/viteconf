@@ -60,7 +60,7 @@ if (!slug || forceDefaultSocialImage) {
 		<UserActions />
 		<main>
 			<HeroBanner />
-			<ComingSoon />
+			<WatchReplay />
 			<ConferenceSchedule :focused-talk="slug" />
 			<Partners />
 		</main>

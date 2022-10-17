@@ -9,7 +9,7 @@ useMainHead({ ae: true });
 		<EcosystemBackground />
 		<main>
 			<HeroBanner />
-			<ComingSoon />
+			<WatchReplay />
 			<TalkList />
 			<Partners />
 		</main>

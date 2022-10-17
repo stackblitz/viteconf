@@ -42,7 +42,7 @@ const chatOpen = useChatOpen();
 	<div>
 		<EcosystemBackground />
 		<HeroBanner />
-		<ComingSoon />
+		<WatchReplay />
 		<!--main>
 			<PlayerActions />
 

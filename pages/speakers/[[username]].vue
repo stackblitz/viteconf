@@ -18,7 +18,7 @@ if (screenName) {
 		<UserActions />
 		<main>
 			<HeroBanner />
-			<ComingSoon />
+			<WatchReplay />
 			<SpeakerList :focused-speaker="screenName" layout="card" />
 			<Partners />
 		</main>

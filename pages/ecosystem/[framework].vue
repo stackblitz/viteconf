@@ -55,7 +55,7 @@ useHead({
 				/>
 			</div>
 
-			<ComingSoon />
+			<WatchReplay />
 
 			<br /><br /><br /><br />
 

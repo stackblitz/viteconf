@@ -13,9 +13,8 @@ onMounted(() => window.scrollTo?.({ behavior: 'smooth', top: 0 }));
 		<main>
 			<HeroBanner />
 			<ConferenceInfoCta sgnupPage="https://viteconf.org" />
-			<ComingSoon />
+			<WatchReplay />
 			<SpeakerList
-				:show-schedule="true"
 				:focused-speaker="undefined"
 				layout="grid"
 			/>
