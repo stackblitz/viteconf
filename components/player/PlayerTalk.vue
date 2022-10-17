@@ -9,12 +9,10 @@ import {
 import { discordLink, liveTranscriptsLink } from '~~/helpers/constants';
 import { talkTitleToSlug } from '~~/helpers/utils';
 
-const { talk } = defineProps<{
+const { talk, isLive = false } = defineProps<{
+	isLive?: boolean;
 	talk: TalkData;
 }>();
-
-const isBlank = (talk: TalkData) =>
-	!talk.duration || !talk.title || talk.speaker === speakers.tbd;
 
 const hasSpeaker = (talk: TalkData) => talk.speaker?.displayName !== 'TBD';
 
@@ -61,8 +59,6 @@ function toggleDiscordProtocol() {
 	<div
 		class="talk"
 		:class="{
-			short: talk.duration < 10,
-			blank: isBlank(talk),
 			adapt: talk.participants,
 		}"
 	>
@@ -70,7 +66,7 @@ function toggleDiscordProtocol() {
 			<div class="talk-content">
 				<div class="talk-info">
 					<div class="play-indicator"></div>
-					<p class="title" v-if="!isBlank(talk)">
+					<p class="title">
 						{{ talk.shortTitle ?? talk.title }}
 					</p>
 					<template v-if="talk.participants">
@@ -89,21 +85,22 @@ function toggleDiscordProtocol() {
 							</NuxtLink>
 						</p>
 					</template>
-
 					<template v-else>
-						<NuxtLink
-							:to="`/speakers/${talk.speaker?.screenName}`"
-							style="cursor: pointer"
-							class="speaker"
-							v-if="hasSpeaker(talk)"
-						>
-							{{ talk.speaker?.displayName }}
-						</NuxtLink>
+						<p class="speakers-container">
+							<NuxtLink
+								:to="`/speakers/${talk.speaker?.screenName}`"
+								style="cursor: pointer"
+								class="speaker"
+								v-if="hasSpeaker(talk)"
+							>
+								{{ talk.speaker?.displayName }}
+							</NuxtLink>
+						</p>
 					</template>
 				</div>
 			</div>
 			<div :class="`actions${showMode ? ' show-mode' : ''}`">
-				<a target="_blank" class="social-button" :href="liveTranscriptsLink">
+				<a v-if="isLive" target="_blank" class="social-button" :href="liveTranscriptsLink">
 					Transcript
 				</a>
 				<button class="social-button" @click="share">Share</button>
@@ -232,9 +229,6 @@ $breakpoint-md: 760px;
 		max-width: calc(100% - 96px);
 	}
 }
-.short .title {
-	padding: 0;
-}
 
 .speakers-container {
 	display: flex;
@@ -248,31 +242,6 @@ $breakpoint-md: 760px;
 	font-weight: 500;
 	&:hover {
 		color: #fff;
-	}
-}
-
-.short.talk {
-	display: flex;
-	align-items: center;
-	min-height: 100px;
-	@media screen and (max-width: $breakpoint-md) {
-		align-items: flex-start;
-		min-height: 72px;
-		height: unset;
-		padding-bottom: 16px;
-	}
-	.logo {
-		transform: scale(0.85);
-		@media screen and (max-width: $breakpoint-md) {
-			transform: scale(0.9);
-		}
-	}
-	.speaker {
-		transform: translateY(1px);
-	}
-	.title {
-		width: unset;
-		max-width: 90%;
 	}
 }
 
@@ -297,7 +266,7 @@ $breakpoint-md: 760px;
 	}
 }
 
-.talk.adapt {
+.talk {
 	max-height: unset;
 	height: unset;
 	align-items: center;

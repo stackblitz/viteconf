@@ -3,13 +3,23 @@ import { vFocusTrap } from '#imports';
 import { useLocalStorage } from '@vueuse/core';
 import { liveTranscriptsLink } from '~~/helpers/constants';
 
+const {
+	isLive = false
+} = defineProps<{
+	isLive?: Boolean;
+}>();
+
 const dispatch = defineEmits<{
 	(e: 'open'): void;
 	(e: 'close', message: string | undefined): void;
 }>();
 
+// Accept CoC agreement from live page
 let livePageDialogDismissed = $(
 	useLocalStorage('viteconf:livePageDialogDismissed', false)
+);
+let playerDialogDismissed = $(
+	useLocalStorage('viteconf:2022:playerDialogDismissed', false)
 );
 
 const full = useFullLogo();
@@ -34,7 +44,7 @@ function close(message?: string) {
 
 	isOpen = false;
 
-	livePageDialogDismissed = true;
+	playerDialogDismissed = true;
 
 	hideFullLogo();
 }
@@ -46,7 +56,7 @@ watchEffect(() => {
 
 watchEffect(() => {
 	if (!import.meta.env.SSR) {
-		if (!livePageDialogDismissed) {
+		if (!livePageDialogDismissed && !playerDialogDismissed) {
 			open();
 		} else {
 			hideFullLogo();
@@ -85,18 +95,19 @@ defineExpose({
 							src="/images/viteconf.svg"
 						/>
 						<span class="logo-text">ViteConf</span>
+						2022
 					</h1>
 				</header>
 
 				<section class="dialog-content">
 					<div class="conf-links">
-						<a :href="liveTranscriptsLink" target="_blank"
+						<a v-if="isLive" :href="liveTranscriptsLink" target="_blank"
 							>Read the live transcripts</a
 						>
 						<a href="https://chat.vitejs.dev" target="_blank"
 							><span
-								>Join <strong>chat.vitejs.dev</strong><br />Chat with the
-								speakers!</span
+								>Join <strong>chat.vitejs.dev</strong><br />
+								{{ `Chat with the ${isLive ? 'speakers' : 'community'}!` }}</span
 							></a
 						>
 					</div>
@@ -117,7 +128,7 @@ defineExpose({
 				</section>
 
 				<button class="dialog-cta" @click="close()">
-					I agree with the Code of Conduct. Let's join!
+					{{ `I agree with the Code of Conduct. Let's ${isLive ? 'join' : 'watch'}!` }}
 				</button>
 			</div>
 		</section>

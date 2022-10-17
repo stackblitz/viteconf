@@ -1,7 +1,14 @@
-import { schedule } from '~~/conference';
+import { schedule, startDateTime } from '~~/conference';
 
-export function useLiveSchedule() {
-	const currentTime = $(useIntervalDate(1000 * 5));
+function useCurrentReplayDate() {
+	const ellapsed = useReplayCurrentTime()
+	return computed(() => {
+		return new Date(startDateTime.getTime() + ellapsed.value * 1000);
+	});
+}
+
+export function usePlayerCurrentSchedule(options: { live: boolean } = { live: false }) {
+	const currentTime = $(options.live ? useIntervalDate(1000 * 5) : useCurrentReplayDate());
 
 	const secondSchedule = schedule.map((section) => ({
 		...section,
@@ -11,7 +18,7 @@ export function useLiveSchedule() {
 		})),
 	}));
 
-	const allTalks = [...schedule, ...secondSchedule]
+	const allTalks = (options.live ? [...schedule, ...secondSchedule] : schedule)
 		.map((section) => {
 			const talks = section.talks;
 			talks.forEach((val) => (val.sectionTitle = section.title));
@@ -23,7 +30,7 @@ export function useLiveSchedule() {
 	const firstTalkTime = allTalks[0].start;
 	const talks = allTalks.filter(
 		(talk) =>
-			talk.start <
+			talk.start <=
 			new Date(
 				Math.max(+new Date(), +firstTalkTime) +
 					/** +12 hours */ 1000 * 60 * 60 * 12

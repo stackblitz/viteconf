@@ -6,15 +6,9 @@ import { talkTitleToSlug } from '~~/helpers/utils';
 
 const { currentTalk, upcomingTalks } = $(usePlayerCurrentSchedule());
 
-useMainHead();
-
 const route = useRoute();
 
 let queryTalk = (route.query.talk as string)?.toLowerCase();
-if (queryTalk === 'hosting_and_the_edge') {
-	queryTalk = 'vite__aws_amplify';
-}
-
 const talk = Object.values(talks).find(
 	(talk) => talkTitleToSlug(talk.title) === queryTalk
 );
@@ -41,15 +35,13 @@ const chatOpen = useChatOpen();
 <template>
 	<div>
 		<EcosystemBackground />
-		<HeroBanner />
-		<ComingSoon />
-		<!--main>
+		<main>
 			<PlayerActions />
 
 			<PlayerDialog></PlayerDialog>
 
 			<div class="top-area">
-				<LiveVideo />
+				<ReplayVideo />
 
 				<div v-show="chatOpen" class="discord-chat">
 					<widgetbot
@@ -62,11 +54,11 @@ const chatOpen = useChatOpen();
 				</div>
 			</div>
 			<div class="current-talk" v-if="currentTalk">
-				<PlayerTalk :talk="currentTalk" :isLive="true" />
+				<PlayerTalk :talk="currentTalk" />
 			</div>
-		</main-->
+		</main>
 		
-		<PlayerSchedule :show-live-talk-link="true" :isLive="true" />
+		<PlayerSchedule :show-live-talk-link="true" />
 		<Partners />
 		<Footer />
 	</div>

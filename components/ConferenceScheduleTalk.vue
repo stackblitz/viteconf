@@ -14,11 +14,12 @@ import {
 const {
 	talk,
 	isFocused = false,
+	replay = false,
 	showLiveTalkLink = false,
 } = defineProps<{
 	talk: TalkData;
 	isFocused?: boolean;
-
+	replay?: boolean;
 	/** Show the live talk link */
 	showLiveTalkLink?: boolean;
 }>();
@@ -56,6 +57,14 @@ onMounted(async () => {
 		});
 	}
 });
+
+const talkStartTime = $computed(() => {
+	return toTalkStartTime(talk.start)
+});
+const talkLocalStartTime = $computed(() => {
+	return toTalkStartLocaleTime(talk.start)
+});
+
 </script>
 
 <template>
@@ -87,14 +96,14 @@ onMounted(async () => {
 			#
 		</a>
 
-		<div class="time-container" :class="{ blank: isBlank(talk) }">
+		<div :style="{ opacity: replay ? 0 : 1 }" class="time-container" :class="{ blank: isBlank(talk) }">
 			<p
 				class="time"
 				v-if="!isBlank(talk) && talk.start"
-				:title="'Your locale time from ' + toTalkStartTime(talk.start)"
+				:title="'Your locale time from ' + talkStartTime"
 			>
-				<ClientOnly :placeholder="toTalkStartTime(talk.start)">
-					{{ toTalkStartLocaleTime(talk.start) }}
+				<ClientOnly :placeholder="talkStartTime">
+					{{ talkLocalStartTime }}
 				</ClientOnly>
 			</p>
 

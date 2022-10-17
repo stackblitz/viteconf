@@ -3,22 +3,36 @@ import { confetti } from '@neoconfetti/svelte';
 import { type Directive } from 'vue';
 import { waitFor } from '~~/helpers/wait-for';
 
-const { showLiveTalkLink } = defineProps<{ showLiveTalkLink: boolean }>();
+const { 
+	showLiveTalkLink,
+	isLive = false
+} = defineProps<{ 
+	showLiveTalkLink: boolean, 
+	isLive?: boolean 
+}>();
 
 const wrapUpEl = ref<HTMLDivElement>();
 
-const { upcomingTalks } = $(useLiveSchedule());
+const { upcomingTalks } = $(usePlayerCurrentSchedule());
 
 let eventEnded = $ref(false);
-watchEffect(() => {
-	if (upcomingTalks.length === 0) eventEnded = true;
-});
 
 let throwConfetti = $ref(false);
 let socialActionsRevealed = $ref(false);
-let partnersRevealed = $ref(false);
 
 let confettiKey = $ref(0);
+
+watchEffect(() => {
+	if (upcomingTalks.length === 0) {
+		eventEnded = true;
+	}
+	else {
+		eventEnded = false;
+		throwConfetti = false;
+		confettiKey = 0;
+		socialActionsRevealed = false;		
+	}
+});
 
 watch(
 	$$(eventEnded),
@@ -36,9 +50,6 @@ watch(
 
 			await waitFor(500);
 			socialActionsRevealed = true;
-
-			await waitFor(500);
-			partnersRevealed = true;
 
 			await waitFor(2000);
 			confettiKey = 1;
@@ -80,10 +91,6 @@ const vConfetti: Directive<HTMLElement> = {
 			>
 				<SocialActions />
 			</div>
-
-			<div class="after-conf" :class="{ show: partnersRevealed }">
-				<Partners />
-			</div>
 		</div>
 		<div class="upcoming-talks" v-else>
 			<h4>Upcoming talks</h4>
@@ -92,6 +99,7 @@ const vConfetti: Directive<HTMLElement> = {
 				:talk="talk"
 				:key="i"
 				:showLiveTalkLink="showLiveTalkLink"
+				:replay="!isLive"
 			/>
 		</div>
 	</div>
