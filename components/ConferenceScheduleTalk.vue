@@ -124,9 +124,14 @@ const talkLocalStartTime = $computed(() => {
 				:src="logoPath(talk.speaker)"
 			/>
 			<div :class="`talk-info ${talk.participants ? ' no-logo' : ''}`">
-				<p class="title" v-if="!isBlank(talk)">
-					{{ talk.shortTitle ?? talk.title }}
-				</p>
+				<template v-if="!isBlank(talk)">
+					<p v-if="replay" @click="skipToTalk(talk)" style="cursor: pointer;" class="title">
+						{{ talk.shortTitle ?? talk.title }}
+					</p>
+					<NuxtLink v-else :to="`/2022/replay/${talk.key}`" style="cursor: pointer;" class="title" v-if="!isBlank(talk)">
+						{{ talk.shortTitle ?? talk.title }}
+					</NuxtLink>
+				</template>
 				<template v-if="talk.participants">
 					<NuxtLink
 						v-for="(participant, i) in talk.participants"

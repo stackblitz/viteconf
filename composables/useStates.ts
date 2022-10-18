@@ -29,3 +29,13 @@ export const usePlayerVideo = () => useState('playerVideo', () => null);
 
 export const useReplayCurrentTime = () => useState('replayCurrentTime', () => 0);
 
+export function skipToTalk(talk) {
+	const player = $(usePlayerVideo())
+	if (player) {
+		const { key, time } = talk
+		window.history?.replaceState({ key },'',`/2022/replay/${key}`)
+		player.seekTo(time);
+		player.playVideo()
+		window.scrollTo(0, 0);
+	}
+}

@@ -8,16 +8,9 @@ import {
 	TalkData,
 } from '~~/conference';
 import { discordLink, liveTranscriptsLink } from '~~/helpers/constants';
-import { talkTitleToSlug } from '~~/helpers/utils';
+
 const player = $(usePlayerVideo());
 const { previousTalk, nextTalk } = $(usePlayerCurrentSchedule());
-
-function skipToTalk(talk) {
-	const { key, time } = talk
-	window.history?.replaceState({ key },'',`/2022/replay/${key}`)
-	player.seekTo(time);
-	player.playVideo()
-}
 
 const { talk, isLive = false } = defineProps<{
 	isLive?: boolean;
