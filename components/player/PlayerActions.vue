@@ -61,7 +61,7 @@ function copyUrl() {
 			>
 				<span><ShareIcon style="transform: scale(1.1);"/>{{ copiedToClipboard ? `Copied` : `Copy URL` }}</span>
 			</button>
-			<a target="_blank" class="social-button subscribe" href="https://chat.vitejs.dev"
+			<a target="_blank" class="social-button subscribe" href="https://www.youtube.com/channel/UCXXpIonjN9ATkXjOJsOwvjg?sub_confirmation=1"
 				><span><YouTubeIcon style="transform: scale(1.2);"/>Subscribe</span></a
 			>
 			<a target="_blank" class="social-button join-discord" href="https://chat.vitejs.dev"
