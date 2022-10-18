@@ -544,4 +544,11 @@ $breakpoint-md: 760px;
 		height: 28px;
 	}
 }
+
+.talk-info .title:hover {
+	background-image: var(--app-background-gradient-light_violet);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 </style>
