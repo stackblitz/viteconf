@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { useIntersectionObserver } from '@vueuse/core';
 import ChatIcon from '~icons/mdi/chat';
+import YouTubeIcon from '~icons/mdi/youtube';
+import DiscordIcon from '~icons/mdi/discord';
+import ShareIcon from '~icons/mdi/timeline-clock';
 
 const smiggetEl = ref<HTMLDivElement>();
 
@@ -10,8 +13,27 @@ useIntersectionObserver(
 	([{ isIntersecting }]) => (opaqueUserActions = !isIntersecting)
 );
 
-const chatOpen = useChatOpen();
-const full = useFullLogo();
+const chatOpen = $(useChatOpen());
+const full = $(useFullLogo());
+const time = $(useReplayCurrentTime());
+
+let copiedToClipboard = $ref<string>();
+
+function timeToHHMMSS(time) {
+  const hours = Math.floor(time/(60*60));
+  const minutes = Math.floor(time/60) - hours*60;
+  const seconds = Math.floor(time) - hours*60*60 - minutes*60;
+  return `${hours ? `${hours}h` : ''}${minutes ? `${minutes}m` : ''}${seconds}s`;
+}
+
+function copyUrl() {
+	const shareURL = `https://viteconf.org/2022/replay?t=${timeToHHMMSS(time)}`;
+	navigator.clipboard.writeText(shareURL);
+	copiedToClipboard = shareURL;
+	setTimeout(() => {
+		copiedToClipboard = null;
+	}, 2000);
+}
 </script>
 
 <template>
@@ -32,8 +54,18 @@ const full = useFullLogo();
 		</NuxtLink>
 
 		<div class="actions">
-			<a target="_blank" class="social-button" href="https://chat.vitejs.dev"
-				>Join Discord</a
+			<button
+				title="Get share link to current time"
+				class="social-button copy-url"
+				@click="copyUrl"
+			>
+				<span><ShareIcon style="transform: scale(1.1);"/>{{ copiedToClipboard ? `Copied` : `Copy URL` }}</span>
+			</button>
+			<a target="_blank" class="social-button subscribe" href="https://chat.vitejs.dev"
+				><span><YouTubeIcon style="transform: scale(1.2);"/>Subscribe</span></a
+			>
+			<a target="_blank" class="social-button join-discord" href="https://chat.vitejs.dev"
+				><span><DiscordIcon/>Join Discord</span></a
 			>
 			<button
 				title="Toggle Chat"
@@ -268,4 +300,27 @@ button.discord-button:hover {
 	outline: none;
 	background-color: #fff2;
 }
+
+.actions a span, .actions button span {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+	align-items: center;
+	justify-items: center;
+}
+.actions button.copy-url {
+	width: 4rem;
+}
+
+@media screen and (max-width: $breakpoint-md) {
+	.actions .join-discord, .actions .discord-button {
+		display: none;
+	}
+}
+@media screen and (max-width: 1000px) {
+	.actions .subscribe, .actions .copy-url {
+		display: none;
+	}
+}
+
 </style>
