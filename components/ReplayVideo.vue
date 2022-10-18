@@ -3,7 +3,8 @@ let replayCurrentTime = $(useReplayCurrentTime());
 let player = $(usePlayerVideo());
 
 const route = useRoute();
-let tQuery = (route.query.t as string)?.toLowerCase();
+const talk = useTalkFromRoute();
+let tQuery = (route.query.t as string ?? route.params.marker as string)?.toLowerCase();
 function tExtract(t: string, re: RegExp) {
 	return +t.match(re)?.[1] ?? 0
 }
@@ -40,7 +41,6 @@ onMounted(() => {
 			done = false;
 		}
 	}
-	console.log(tQuery ? tToSeconds(tQuery) : 0);
 
 	window.onYouTubeIframeAPIReady = () => {
 		player = new YT.Player('player', {
@@ -50,7 +50,7 @@ onMounted(() => {
 			playerVars: {
 				'playsinline': 1,
 				'autoplay': 1,
-				'start': tQuery ? tToSeconds(tQuery) : 0,
+				'start': talk?.time ?? (tQuery ? tToSeconds(tQuery) : 0),
 			},
 			events: {
 				onReady,

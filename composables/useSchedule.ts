@@ -1,4 +1,5 @@
-import { schedule, startDateTime } from '~~/conference';
+import { talks, glue, schedule, startDateTime } from '~~/conference';
+import { talkTitleToSlug } from '~~/helpers/utils';
 
 function useCurrentReplayDate() {
 	const elapsed = useReplayCurrentTime()
@@ -51,4 +52,29 @@ export function usePlayerCurrentSchedule(options: { live: boolean } = { live: fa
 	const nextTalk = $computed(() => talks[talksDone.length]);
 	
 	return $$({ previousTalk, currentTalk, nextTalk, upcomingTalks });
+}
+
+function matchSpeaker(speaker, marker: string) {
+	return speaker.screenName.toLowerCase() === marker || speaker.twitter.toLowerCase() === marker
+}
+
+export function useTalkFromRoute() {
+	const route = useRoute();
+
+	let queryMarker = (route.params.marker as string)?.toLowerCase();
+	if (!queryMarker) {
+		return;
+	}
+	return talks[queryMarker] ?? glue[queryMarker] ?? [...Object.values(talks), ...Object.values(glue)].find(
+		(talk) => {
+			const speaker = talk.speaker;
+			if (speaker && matchSpeaker(speaker, queryMarker)) {
+				return true;
+			}
+			if (talkTitleToSlug(talk.title) === queryMarker) {
+				return true;
+			}
+			return talk.participants?.find(p => matchSpeaker(p, queryMarker))
+		}
+	);
 }

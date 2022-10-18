@@ -1,17 +1,10 @@
 <script lang="ts" setup>
 import '@@/assets/css/global.scss';
 import { useLiveHead } from '~~/composables/useHead';
-import { talks } from '~~/conference';
-import { talkTitleToSlug } from '~~/helpers/utils';
 
 const { currentTalk, upcomingTalks } = $(usePlayerCurrentSchedule());
 
-const route = useRoute();
-
-let queryTalk = (route.query.talk as string)?.toLowerCase();
-const talk = Object.values(talks).find(
-	(talk) => talkTitleToSlug(talk.title) === queryTalk
-);
+const talk = useTalkFromRoute();
 
 if (!talk) {
 	useMainHead({ ae: true });

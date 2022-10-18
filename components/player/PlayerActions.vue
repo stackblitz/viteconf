@@ -5,12 +5,6 @@ import YouTubeIcon from '~icons/mdi/youtube';
 import DiscordIcon from '~icons/mdi/discord';
 import ShareIcon from '~icons/mdi/timeline-clock';
 
-const {
-	isLive = false
-} = defineProps<{
-	isLive?: Boolean;
-}>();
-
 const smiggetEl = ref<HTMLDivElement>();
 
 let opaqueUserActions = $ref(false);
@@ -33,7 +27,7 @@ function timeToHHMMSS(time) {
 }
 
 function copyUrl() {
-	const shareURL = `https://viteconf.org/2022/replay?t=${timeToHHMMSS(time)}`;
+	const shareURL = `https://viteconf.org/2022/replay/${timeToHHMMSS(time)}`;
 	navigator.clipboard.writeText(shareURL);
 	copiedToClipboard = shareURL;
 	setTimeout(() => {

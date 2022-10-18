@@ -31,21 +31,21 @@ let showMode = $ref(false);
 
 const share = async () => {
 	let tweetText: string;
-	let url: string;
-
-	const baseUrl = isLive ? 'https://viteconf.org/live' : 'https://viteconf.org/2022/replay';
-
+	
 	if (!talk.speaker || talk.speaker.displayName === 'TBD') {
 		tweetText = isLive ? `I am watching ViteConf live! Come watch!` : ``;
-		url = baseUrl;
 	} else {
 		const messages = liveTwitterMessagesShareTalk;
 		const message =
 			messages[Math.floor(Math.random() * messages.length)] ?? messages[0];
 
 		tweetText = message(talk.speaker);
-		url = `${baseUrl}?talk=${talkTitleToSlug(talk.title)}`;
+		
 	}
+	
+	const baseUrl = isLive ? 'https://viteconf.org/live' : 'https://viteconf.org/2022/replay';
+
+	const url = `${baseUrl}/${talk.key}`;
 
 	const twitterUrl = `https://twitter.com/intent/tweet?url=${url}&text=${tweetText}`;
 
