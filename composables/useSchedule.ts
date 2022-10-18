@@ -55,7 +55,7 @@ export function usePlayerCurrentSchedule(options: { live: boolean } = { live: fa
 }
 
 function matchSpeaker(speaker, marker: string) {
-	return speaker.screenName.toLowerCase() === marker || speaker.twitter.toLowerCase() === marker
+	return speaker.screenName.toLowerCase() === marker || speaker.twitter?.toLowerCase() === marker
 }
 
 export function useTalkFromRoute() {

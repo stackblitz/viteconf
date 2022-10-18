@@ -27,8 +27,11 @@ onMounted(() => {
 
 	// 3. This function creates an <iframe> (and YouTube player)
 	//    after the API code downloads.
-	function onReady(event) {
-		event.target.playVideo();
+	function onReady() {
+		player.setVolume(25);
+		setTimeout(() => {
+			player?.unMute();
+		}, 500);
 	}
 	let done = false;
 	function onStateChange(event) {
@@ -50,6 +53,8 @@ onMounted(() => {
 			playerVars: {
 				'playsinline': 1,
 				'autoplay': 1,
+				'mute': 1,
+				'rel': 0,
 				'start': talk?.time ?? (tQuery ? tToSeconds(tQuery) : 0),
 			},
 			events: {
