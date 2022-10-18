@@ -19,5 +19,11 @@ export const useChatOpen = () => useState('chatOpen', () => true);
 
 export const useFullLogo = () => useState('fullLogo', () => true);
 
+export function hideFullLogo() {
+	setTimeout(() => {
+		useFullLogo().value = false;
+	}, 5000);
+}
+
 export const useReplayCurrentTime = () => useState('replayCurrentTime', () => 0);
 

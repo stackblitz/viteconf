@@ -33,12 +33,6 @@ function open() {
 	isOpen = true;
 }
 
-function hideFullLogo() {
-	setTimeout(() => {
-		full.value = false;
-	}, 5000);
-}
-
 function close(message?: string) {
 	dispatch('close', message);
 

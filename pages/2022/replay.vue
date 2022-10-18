@@ -22,11 +22,14 @@ if (!talk) {
 onMounted(() => {
 	import('@widgetbot/html-embed');
 
-	if (upcomingTalks.length > 0)
+	if (upcomingTalks.length > 0) {
 		window.scrollTo({
 			behavior: 'smooth',
 			top: 0,
 		});
+	}
+	
+	hideFullLogo();
 });
 
 const chatOpen = useChatOpen();
@@ -37,8 +40,6 @@ const chatOpen = useChatOpen();
 		<EcosystemBackground />
 		<main>
 			<PlayerActions />
-
-			<PlayerDialog></PlayerDialog>
 
 			<div class="top-area">
 				<ReplayVideo />
