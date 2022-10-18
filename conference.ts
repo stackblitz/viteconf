@@ -1336,11 +1336,10 @@ export const postConferenceTalks = processTalks({
 		speaker: speakers.juristr,
 		duration: 20,
 	},
-	histoire: {
+	histoire_deep_dive: {
 		title: 'Histoire Deep Dive',
 		speaker: speakers.akryum,
 		duration: 20,
-		slideImage: 'histoire-post',
 	},
 	imba: {
 		title: 'Imba: when paradigms shift',
@@ -1640,7 +1639,7 @@ export const twitterMessagesFromSpeaker = [
 
 export const liveTwitterMessagesShareTalk = [
 	(username: SpeakerData) =>
-		`I'm watching ${pluralizeUserDisplayName(username.displayName)}'s @ViteConf talk: ${
+		`I'm watching ${pluralizeUserDisplayName(username.displayName)} @ViteConf talk: ${
 			username.talk.title
 		}. Check it out here!`,
 ];

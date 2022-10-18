@@ -6,11 +6,7 @@ const { currentTalk, upcomingTalks } = $(usePlayerCurrentSchedule());
 
 const talk = useTalkFromRoute();
 
-if (!talk) {
-	useMainHead({ ae: true });
-} else {
-	useLiveHead(talk);
-}
+useReplayHead(talk);
 
 onMounted(() => {
 	import('@widgetbot/html-embed');

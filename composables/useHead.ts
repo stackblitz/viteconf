@@ -112,6 +112,25 @@ export function useLiveHead(talk: TalkData) {
 	);
 }
 
+export function useReplayHead(talk: TalkData) {
+	const speakersInvolvedStr =
+		talk.speaker?.displayName ??
+		makeString(talk.participants.map((s) => s.screenName));
+
+	useHead(
+		viteConfHead({
+			title: `ViteConf`,
+			ogTitle: `${talk.shortTitle ?? talk.title} - Viteconf`,
+			description: `${
+				talk.shortTitle ?? talk.title
+			} | ${speakersInvolvedStr} | ViteConf 2022`,
+			image: `https://viteconf.org${talk.slideImage}`,
+			url: `https://viteconf.org/2022/replay/${talk.key}`,
+			ae: true,
+		})
+	);
+}
+
 export function useSpeakerChatHead(screenName: string) {
 	const speaker = speakers[screenName.toLowerCase()] as SpeakerData;
 	useHead(
