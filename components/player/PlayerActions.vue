@@ -88,7 +88,7 @@ span.stackblitz {
 	opacity: 0;
 	transition: opacity 0.5s ease-in-out;
 }
-.full span.stackblitz {
+.full span.stackblitz, .logo:hover span.stackblitz {
 	color: white;
 	opacity: 1;
 	@media screen and (max-width: 600px) {
@@ -157,7 +157,7 @@ button {
 	margin-left: 1rem;
 	filter: sepia(1) hue-rotate(245deg) brightness(0.6) saturate(0.9);
 }
-.full .logo {
+.full .logo, .logo:hover {
 	filter: none;
 }
 
