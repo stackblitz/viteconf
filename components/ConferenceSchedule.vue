@@ -75,24 +75,28 @@ const formattedStartDate = toTalkStartLocaleTime(startDateTime, {
 				<div class="schedule-item">
 					<ConferenceScheduleTalk
 						v-for="(talk, i) in preConferenceTalks"
+						:main="false"
 						:talk="talk"
 						:key="i"
 						:is-focused="talkTitleToSlug(talk.title) === focusedTalk"
 					/>
 				</div>
 			</div>
-
-			<h4>Post-Conference Talks</h4>
-			<div class="schedule">
-				<div class="schedule-item">
-					<ConferenceScheduleTalk
-						v-for="(talk, i) in postConferenceTalks"
-						:talk="talk"
-						:key="i"
-						:is-focused="talkTitleToSlug(talk.title) === focusedTalk"
-					/>
+			<template v-if="!replay">
+				<h4>Post-Conference Talks</h4>
+				<div class="schedule">
+					<div class="schedule-item">
+						<ConferenceScheduleTalk
+							v-for="(talk, i) in postConferenceTalks"
+							:main="false"
+							:released="false"
+							:talk="talk"
+							:key="i"
+							:is-focused="talkTitleToSlug(talk.title) === focusedTalk"
+						/>
+					</div>
 				</div>
-			</div>
+			</template>
 		</div>
 	</section>
 </template>

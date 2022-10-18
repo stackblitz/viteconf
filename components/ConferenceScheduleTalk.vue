@@ -16,10 +16,14 @@ const {
 	isFocused = false,
 	replay = false,
 	showLiveTalkLink = false,
+	main = true,
+	released = true,
 } = defineProps<{
 	talk: TalkData;
 	isFocused?: boolean;
 	replay?: boolean;
+	main?: boolean;
+	released?: boolean;
 	/** Show the live talk link */
 	showLiveTalkLink?: boolean;
 }>();
@@ -125,12 +129,15 @@ const talkLocalStartTime = $computed(() => {
 			/>
 			<div :class="`talk-info ${talk.participants ? ' no-logo' : ''}`">
 				<template v-if="!isBlank(talk)">
-					<p v-if="replay" @click="skipToTalk(talk)" style="cursor: pointer;" class="title">
+					<p v-if="replay && main" @click="skipToTalk(talk)" style="cursor: pointer;" class="title">
 						{{ talk.shortTitle ?? talk.title }}
 					</p>
-					<NuxtLink v-else :to="`/2022/replay/${talk.key}`" style="cursor: pointer;" class="title" v-if="!isBlank(talk)">
+					<NuxtLink v-else-if="released" :to="main ? `/2022/replay/${talk.key}` : talk.video" style="cursor: pointer;" class="title">
 						{{ talk.shortTitle ?? talk.title }}
 					</NuxtLink>
+					<p v-else class="title">
+						{{ talk.shortTitle ?? talk.title }}
+					</p>
 				</template>
 				<template v-if="talk.participants">
 					<NuxtLink

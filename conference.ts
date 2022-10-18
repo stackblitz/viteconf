@@ -48,6 +48,7 @@ export type TalkData = {
 	sectionTitle?: string;
 
 	slideImage?: string;
+	video?: string;
 };
 
 export type ScheduleData = {
@@ -1305,6 +1306,7 @@ export const preConferenceTalks = processTalks({
 		title: 'Functional Programming in Vite with Elm',
 		speaker: speakers.lindsaykwardell,
 		duration: 20,
+		video: 'https://youtu.be/ZPVGK2OSTog'
 	},
 	preview_js: {
 		title:
@@ -1312,6 +1314,7 @@ export const preConferenceTalks = processTalks({
 		ticketTitle: 'Preview.js',
 		speaker: speakers.fwouts,
 		duration: 20,
+		video: 'https://youtu.be/_XlUQhIBDH4'
 	},
 });
 
