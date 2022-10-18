@@ -48,7 +48,7 @@ const chatOpen = useChatOpen();
 			</div>
 		</main>
 		
-		<PlayerSchedule :show-live-talk-link="true" />
+		<ConferenceSchedule :replay="true" />
 		<Partners />
 		<Footer />
 	</div>
