@@ -1395,7 +1395,7 @@ export const glue = processTalks({
 		title: 'Frameworks Section',
 		speaker: speakers.jutanium,
 		duration: 3,
-		time: t(`08:30:55`)
+		time: t(`08:31:00`)
 	},
 	backend: {
 		title: 'Backend Integrations Section',
