@@ -113,22 +113,33 @@ export function useLiveHead(talk: TalkData) {
 }
 
 export function useReplayHead(talk: TalkData) {
-	const speakersInvolvedStr =
-		talk.speaker?.displayName ??
-		makeString(talk.participants.map((s) => s.screenName));
+	if(talk) {	
+		const speakersInvolvedStr =
+			talk.speaker?.displayName ??
+			makeString(talk.participants.map((s) => s.screenName));
 
-	useHead(
-		viteConfHead({
-			title: `ViteConf`,
-			ogTitle: `${talk.shortTitle ?? talk.title} - Viteconf`,
-			description: `${
-				talk.shortTitle ?? talk.title
-			} | ${speakersInvolvedStr} | ViteConf 2022`,
-			image: `https://viteconf.org${talk.slideImage}`,
-			url: `https://viteconf.org/2022/replay/${talk.key}`,
-			ae: true,
-		})
-	);
+		useHead(
+			viteConfHead({
+				title: `ViteConf`,
+				ogTitle: `${talk.shortTitle ?? talk.title} - Viteconf`,
+				description: `${
+					talk.shortTitle ?? talk.title
+				} | ${speakersInvolvedStr} | ViteConf 2022`,
+				image: `https://viteconf.org${talk.slideImage}`,
+				url: `https://viteconf.org/2022/replay/${talk.key}`
+			})
+		);
+	}
+	else {
+		useHead(
+			viteConfHead({
+				title: `ViteConf 2022 Replay`,
+				description: `A free online conference about Vite and the projects reimagining Web Development, brought to you by StackBlitz`,
+				image: `https://viteconf.org/images/viteconf-2022-replay.png`,
+				url: `https://viteconf.org/2022/replay`
+			})
+		);
+	}
 }
 
 export function useSpeakerChatHead(screenName: string) {
