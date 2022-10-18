@@ -46,7 +46,9 @@ export function usePlayerCurrentSchedule(options: { live: boolean } = { live: fa
 		talks.slice(talksDone.length)
 	);
 
-	const currentTalk = $computed(() => talksDone[talksDone.length - 1]);
-
-	return $$({ currentTalk, upcomingTalks });
+	const previousTalk = $computed(() => talks[talksDone.length - 2]);
+	const currentTalk = $computed(() => talks[talksDone.length - 1]);
+	const nextTalk = $computed(() => talks[talksDone.length]);
+	
+	return $$({ previousTalk, currentTalk, nextTalk, upcomingTalks });
 }

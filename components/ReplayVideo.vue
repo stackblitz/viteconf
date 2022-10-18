@@ -1,6 +1,6 @@
 <script setup lang="ts">
 let replayCurrentTime = $(useReplayCurrentTime());
-let player;
+let player = $(usePlayerVideo());
 
 const route = useRoute();
 let tQuery = (route.query.t as string)?.toLowerCase();
@@ -14,13 +14,6 @@ function tToSeconds(t: string) {
 	console.log({ t, hours, minutes, seconds });
 	return (hours * 60 + minutes) * 60 + seconds;
 }
-
-function goToTime(seconds: number) {
-	if (player) {
-		player.seekTo(seconds)
-	}
-}
-
 
 onMounted(() => {
 	

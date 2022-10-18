@@ -25,5 +25,7 @@ export function hideFullLogo() {
 	}, 5000);
 }
 
+export const usePlayerVideo = () => useState('playerVideo', () => null);
+
 export const useReplayCurrentTime = () => useState('replayCurrentTime', () => 0);
 

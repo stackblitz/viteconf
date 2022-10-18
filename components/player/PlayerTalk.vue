@@ -1,13 +1,23 @@
 <script lang="ts" setup>
 import '@fontsource/roboto-mono/500.css';
 import DiscordIcon from '~icons/mdi/discord';
+import PrevIcon from '~icons/mdi/skip-previous';
+import NextIcon from '~icons/mdi/skip-next';
 import {
 	liveTwitterMessagesShareTalk,
-	speakers,
 	TalkData,
 } from '~~/conference';
 import { discordLink, liveTranscriptsLink } from '~~/helpers/constants';
 import { talkTitleToSlug } from '~~/helpers/utils';
+const player = $(usePlayerVideo());
+const { previousTalk, nextTalk } = $(usePlayerCurrentSchedule());
+
+function skipToTalk(talk) {
+	const { key, time } = talk
+	window.history?.replaceState({ key },'',`/2022/replay/${key}`)
+	player.seekTo(time);
+	player.playVideo()
+}
 
 const { talk, isLive = false } = defineProps<{
 	isLive?: boolean;
@@ -65,6 +75,26 @@ function toggleDiscordProtocol() {
 		}"
 	>
 		<div class="talk-container">
+			<div :class="`actions${showMode ? ' show-mode' : ''}`">
+				<span class="video-controls" v-if="!isLive">
+					<button
+						title="Previous Talk"
+						class="social-button previous-talk"
+						:disabled="player && !previousTalk"
+						@click="skipToTalk(previousTalk)"
+					>
+						<PrevIcon />
+					</button>
+					<button
+						title="Next Talk"
+						class="social-button next-talk"
+						:disabled="player && !nextTalk"
+						@click="skipToTalk(nextTalk)"
+					>
+						<NextIcon />
+					</button>
+				</span>
+			</div>
 			<div class="talk-content">
 				<div class="talk-info">
 					<div class="play-indicator"></div>
@@ -105,8 +135,8 @@ function toggleDiscordProtocol() {
 				<a v-if="isLive" target="_blank" class="social-button" :href="liveTranscriptsLink">
 					Transcript
 				</a>
-				<button class="social-button" @click="share">Share</button>
-				<a target="_blank" class="social-button" :href="getDiscordChatLink()">{{
+				<button class="social-button share" @click="share">Share</button>
+				<a target="_blank" class="social-button discuss" :href="getDiscordChatLink()">{{
 					showMode
 						? discordProtocol
 							? 'Open in App'
@@ -172,7 +202,7 @@ $breakpoint-md: 760px;
 	flex: 1;
 	display: flex;
 	gap: 1.9rem;
-	padding: 0.8rem 1rem;
+	padding: 0.8rem 0rem;
 	@media screen and (max-width: $breakpoint-md) {
 		padding-top: 14px;
 		padding-left: 14px;
@@ -292,7 +322,7 @@ $breakpoint-md: 760px;
 	justify-content: center;
 	cursor: pointer;
 	box-shadow: none;
-	@media screen and (max-width: 1300px) {
+	@media screen and (max-width: 1350px) {
 		min-width: unset;
 		padding: 12px 16px;
 	}
@@ -325,5 +355,40 @@ button.discord-button.discord-protocol {
 button.discord-button:hover {
 	outline: none;
 	color: white;
+}
+
+.video-controls {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+}
+.video-controls button.social-button {
+	min-width: 3.2rem;
+}
+
+.video-controls button.social-button svg {
+	transform: scale(1.4);
+}
+.video-controls button.social-button:disabled svg {
+	opacity: 0.5;
+}
+
+@media screen and (max-width: 1200px) {
+	.actions .discord-button, .actions .discuss {
+		display: none;
+	}
+}
+@media screen and (max-width: 1100px) {
+	.actions .share {
+		display: none;
+	}
+}
+@media screen and (max-width: 1000px) {
+	.actions {
+		display: none;
+	}
+	.talk-content {
+		padding-left: 1rem;
+	}
 }
 </style>

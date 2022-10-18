@@ -5,6 +5,12 @@ import YouTubeIcon from '~icons/mdi/youtube';
 import DiscordIcon from '~icons/mdi/discord';
 import ShareIcon from '~icons/mdi/timeline-clock';
 
+const {
+	isLive = false
+} = defineProps<{
+	isLive?: Boolean;
+}>();
+
 const smiggetEl = ref<HTMLDivElement>();
 
 let opaqueUserActions = $ref(false);
@@ -322,5 +328,4 @@ button.discord-button:hover {
 		display: none;
 	}
 }
-
 </style>
