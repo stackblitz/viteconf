@@ -1023,7 +1023,7 @@ export const talks = processTalks({
 		title: 'Keynote: How Vite Came to Be',
 		speaker: speakers['yyx990803'],
 		duration: 28,
-		time: t(`00:13:16`)
+		time: t(`00:16:21`)
 	},
 	ecosystem: {
 		title: 'The Vite Ecosystem',
@@ -1041,7 +1041,7 @@ export const talks = processTalks({
 		title: 'Vike, Build Your Own Framework',
 		speaker: speakers.brillout,
 		duration: 4, // 60sec
-		time: t(`06:49:06`)
+		time: t(`06:53:15`)
 	},
 	fastify: {
 		title: 'Rethinking the Full Stack Framework',
@@ -1053,20 +1053,20 @@ export const talks = processTalks({
 		title: 'StackBlitz Keynote',
 		participants: [speakers.sylwiavargas, speakers.sulco, speakers.ericsimons],
 		duration: 32, // 60sec
-		time: t(`02:16:05`)
+		time: t(`02:16:10`)
 	},
 	storybook: {
 		title: 'Developing, Documenting, and Testing your Vite app with Storybook',
 		ticketTitle: 'Your Vite app with Storybook',
 		speaker: speakers.ianvs,
 		duration: 21, // 60sec
-		time: t(`02:52:30`)
+		time: t(`02:52:35`)
 	},
 	histoire: {
 		title: 'Introduction to Histoire',
 		speaker: speakers.hugoattal,
 		duration: 6, // 60sec
-		time: t(`03:13:16`)
+		time: t(`03:13:31`)
 	},
 	ladle: {
 		title: 'Introducing Ladle: Develop and test your React stories faster',
@@ -1085,13 +1085,13 @@ export const talks = processTalks({
 		title: 'What makes pnpm performant',
 		speaker: speakers.zkochan,
 		duration: 22, // 30sec
-		time: t(`03:30:55`)
+		time: t(`03:31:00`)
 	},
 	vitepress: {
 		title: 'Deep Dive into VitePress',
 		speaker: speakers.kiaking,
 		duration: 30, // 30sec
-		time: t(`01:32:20`)
+		time: t(`01:32:26`)
 	},
 	sveltekit: {
 		title: 'SvelteKit',
@@ -1103,7 +1103,7 @@ export const talks = processTalks({
 		title: 'How Vite Makes Nuxt Possible',
 		speaker: speakers.danielroe,
 		duration: 26, // 60sec
-		time: t(`04:12:12`)
+		time: t(`04:12:15`)
 	},
 	angular: {
 		title: 'Vite, Meta-Frameworks, and Angular',
@@ -1121,7 +1121,7 @@ export const talks = processTalks({
 		title: 'Rakkas: React apps with no API layer',
 		speaker: speakers.cyco130,
 		duration: 6, // 60sec
-		time: t(`05:18:30`)
+		time: t(`05:18:27`)
 	},
 	frameworks_panel: {
 		title: 'Frameworks Panel',
@@ -1135,7 +1135,7 @@ export const talks = processTalks({
 			speakers.jtomchak,
 		],
 		duration: 46, // 120sec
-		time: t(`05:31:04`)
+		time: t(`05:31:12`)
 	},
 	netlify: {
 		title: 'Vite SSR at Netlify Edge',
@@ -1155,13 +1155,13 @@ export const talks = processTalks({
 		shortTitle: 'Vite + Firebase',
 		speaker: speakers.davideast,
 		duration: 6, // 60sec
-		time: t(`06:35:35`)
+		time: t(`06:35:43`)
 	},
 	aws_amplify: {
 		title: 'Vite + AWS Amplify',
 		speaker: speakers.josefaidt,
 		duration: 6, // 60sec
-		time: t(`06:29:55`)
+		time: t(`06:29:59`)
 	},
 	laravel: {
 		title: 'Unlimited power with Laravel and Vite!',
@@ -1187,7 +1187,7 @@ export const talks = processTalks({
 		title: 'Component Testing with Playwright',
 		speaker: speakers['debs-obrien'],
 		duration: 20, // 30sec
-		time: t(`07:49:57`)
+		time: t(`07:49:53`)
 	},
 	vitest: {
 		title: 'Vitest, testing DX reimagined',
@@ -1206,7 +1206,7 @@ export const talks = processTalks({
 		ticketTitle: 'Why Vite is the future of the MPA',
 		speaker: speakers.dylanpiercey,
 		duration: 17, // 20sec
-		time: t(`08:54:07`)
+		time: t(`08:54:03`)
 	},
 	hydrogen: {
 		title: 'Headless commerce with Shopify/Hydrogen and Vite',
@@ -1231,13 +1231,13 @@ export const talks = processTalks({
 		title: 'Bun + Vite',
 		speaker: speakers['jarred-sumner'],
 		duration: 3, // 60sec
-		time: t(`06:41:40`)
+		time: t(`06:41:50`)
 	},
 	deno: {
 		title: 'Deno + Vite',
 		speaker: speakers.bartlomieju,
 		duration: 5, // 60sec
-		time: t(`06:44:38`)
+		time: t(`06:44:48`)
 	},
 	contributing_101: {
 		title: 'Vite Core, Contributing 101',
@@ -1249,20 +1249,20 @@ export const talks = processTalks({
 		title: `Vue's Road to Vite`,
 		speaker: speakers.sodatea,
 		duration: 21, // 50sec
-		time: t(`10:23:30`)
+		time: t(`10:23:33`)
 	},
 	rollup: {
 		title: 'The hashing dilemma, Rollup 3, and our future with Vite',
 		ticketTitle: 'Rollup 3, and our future with Vite',
 		speaker: speakers.lukastaegert,
 		duration: 19, // 60sec
-		time: t(`01:10:15`)
+		time: t(`01:10:19`)
 	},
 	vite_ecosystem_ci: {
 		title: 'vite-ecosystem-ci',
 		speaker: speakers.dominikg,
 		duration: 9, // 30sec
-		time: t(`10:44:28`)
+		time: t(`10:44:32`)
 	},
 	vite_panel: {
 		title: 'Vite Panel',
@@ -1276,20 +1276,20 @@ export const talks = processTalks({
 			speakers.ladyleet,
 		],
 		duration: 46, // 120sec
-		time: t(`10:52:10`)
+		time: t(`10:52:20`)
 	},
 	tauri: {
 		title: 'Tauri: Building better apps for a better future',
 		ticketTitle: 'Tauri',
 		speaker: speakers.jonaskruckenberg,
 		duration: 6, // 60sec
-		time: t(`05:24:34`)
+		time: t(`05:24:44`)
 	},
 	opensauced: {
 		title: 'Things learned from Vite contributions',
 		speaker: speakers.bdougie,
 		duration: 5,
-		time: t(`10:17:52`)
+		time: t(`10:17:47`)
 	},
 	education: {
 		title: 'Vite for Education: Vite in Vite to teach Vite and beyond',
@@ -1355,11 +1355,17 @@ export const glue = processTalks({
 		duration: 13,
 		time: t(`00:00:00`)
 	},
+	eric_and_evan: {
+		title: 'Eric and Evan',
+		participants: [speakers.ericsimons, speakers.yyx990803],
+		duration: 13,
+		time: t(`00:13:15`)
+	},
 	vite: {
 		title: 'Vite Section',
 		speaker: speakers.ericsimons,
 		duration: 4,
-		time: t(`00:41:40`)
+		time: t(`00:42:03`)
 	},
 	documentation: {
 		title: 'Documentation Section',
@@ -1425,7 +1431,10 @@ export const glue = processTalks({
 
 export const schedule = augmentSchedule([
 	{
-		talks: [glue.welcome],
+		talks: [
+			glue.welcome,
+			glue.eric_and_evan,
+		],
 	},
 	{
 		title: 'Vite Core',
