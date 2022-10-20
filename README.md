@@ -15,7 +15,7 @@
 
 *Making Web Development Instant*
 
-💜 Watch the full replay at [viteconf.org/replay/2022](https://viteconf.org/replay/2022)
+💜 Watch the full replay at [viteconf.org/2022/replay](https://viteconf.org/2022/replay)
  
 All these URL schemes are valid and will generate a unique social image when sharing:
 - `/2022/replay/{speaker}` (Github or Twitter username)
