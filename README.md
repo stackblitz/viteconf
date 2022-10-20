@@ -13,16 +13,18 @@
 
 # ViteConf 2022 ⚡
 
-> Making Web Development Instant
+*Making Web Development Instant*
 
-This is the main development repository for the ViteConf 2022 online conference website powering [viteconf.org](https://viteconf.org). This website is built using Nuxt 3 and is a fullstack application. It leverages server-side rendering, backend database interactions for registration, and of course is powered by Vite under the hood. This means that the DX comes out of the box with:
+💜 Watch the full replay at [viteconf.org/replay/2022](https://viteconf.org/replay/2022)
+ 
+All these URL schemes are valid and will generate a unique social image when sharing:
+- `/2022/replay/{speaker}` (Github or Twitter username)
+- `/2022/replay/{talk}` (click prev, next, or a talk title)
+- `/2022/replay/10h20m30s` (YouTube `t` query param)
 
-- 💡 Instant Server Start
-- ⚡️ Lightning Fast HMR
-- 🛠️ Rich Features
-- 📦 Optimized Build
-- 🔩 Universal Plugin Interface
-- 🔑 Fully Typed APIs
+# Stack
+
+This is the main development repository for the ViteConf 2022 online conference website powering [viteconf.org](https://viteconf.org). This website is built using Nuxt 3 and is a fullstack application. It leverages server-side rendering, backend database interactions for registration, and of course is powered by Vite under the hood using [Nuxt 3](https://v3.nuxtjs.org/).
 
 ## Contributing
 
