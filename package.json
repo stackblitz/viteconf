@@ -26,9 +26,9 @@
 	},
 	"dependencies": {
 		"@neoconfetti/svelte": "^1.0.0",
-		"@vueuse/core": "^9.2.0",
-		"@widgetbot/html-embed": "^1.2.0",
-		"firebase": "9.9.2"
+		"@vueuse/core": "^10.1.2",
+		"@widgetbot/html-embed": "^1.2.1",
+		"firebase": "9.21.0"
 	},
 	"simple-git-hooks": {
 		"pre-commit": "pnpm exec lint-staged --concurrent false"
