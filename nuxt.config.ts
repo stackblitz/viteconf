@@ -1,4 +1,3 @@
-import { defineNuxtConfig } from 'nuxt';
 import UnpluginIcons from 'unplugin-icons/vite';
 
 const plugins = [UnpluginIcons({ compiler: 'vue3', autoInstall: true })];

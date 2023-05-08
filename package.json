@@ -15,14 +15,14 @@
 		"@iconify-json/ph": "^1.1.2",
 		"autoprefixer": "^10.4.11",
 		"lint-staged": "^13.0.3",
-		"nuxt": "3.0.0-rc.8",
+		"nuxt": "3.4.3",
 		"postcss": "^8.4.16",
 		"prettier": "^2.7.1",
 		"sass": "^1.54.9",
 		"simple-git-hooks": "^2.8.0",
-		"unplugin-icons": "^0.14.10",
+		"unplugin-icons": "^0.16.1",
 		"vite-imagetools": "^4.0.9",
-		"vue": "3.2.40"
+		"vue": "3.2.47"
 	},
 	"dependencies": {
 		"@neoconfetti/svelte": "^1.0.0",
@@ -33,6 +33,7 @@
 	"simple-git-hooks": {
 		"pre-commit": "pnpm exec lint-staged --concurrent false"
 	},
+	"packageManager": "pnpm@8.3.1",
 	"lint-staged": {
 		"*.{ts,css,html,vue}": [
 			"prettier --write *.{ts,css,html,vue} --cache --ignore-unknown"
