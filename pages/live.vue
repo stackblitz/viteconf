@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
 import { useLiveHead } from '~~/composables/useHead';
 import { talks } from '~~/conference';
 import { talkTitleToSlug } from '~~/helpers/utils';
@@ -65,7 +64,7 @@ const chatOpen = useChatOpen();
 				<PlayerTalk :talk="currentTalk" :isLive="true" />
 			</div>
 		</main-->
-		
+
 		<PlayerSchedule :show-live-talk-link="true" :isLive="true" />
 		<Partners />
 		<Footer />

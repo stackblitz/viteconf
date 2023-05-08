@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
-
 useMainHead({ ae: true });
 </script>
 

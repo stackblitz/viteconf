@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
-import { useLiveHead } from '~~/composables/useHead';
-
 const { currentTalk, upcomingTalks } = $(usePlayerCurrentSchedule());
 
 const talk = useTalkFromRoute();
@@ -17,7 +14,7 @@ onMounted(() => {
 			top: 0,
 		});
 	}
-	
+
 	hideFullLogo();
 });
 
@@ -47,7 +44,7 @@ const chatOpen = useChatOpen();
 				<PlayerTalk :talk="currentTalk" />
 			</div>
 		</main>
-		
+
 		<ConferenceSchedule :replay="true" />
 		<Partners />
 		<Footer />

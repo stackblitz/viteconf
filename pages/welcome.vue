@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
-
 const user = useUser();
 
 useMainHead();

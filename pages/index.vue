@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
-
 useMainHead();
 
 onMounted(() => window.scrollTo?.({ behavior: 'smooth', top: 0 }));
@@ -16,10 +14,7 @@ onMounted(() => window.scrollTo?.({ behavior: 'smooth', top: 0 }));
 				Watch the 2022 replay!
 			</a>
 			<ConferenceInfoCta sgnupPage="https://viteconf.org" />
-			<SpeakerList
-				:focused-speaker="undefined"
-				layout="grid"
-			/>
+			<SpeakerList :focused-speaker="undefined" layout="grid" />
 			<SocialActions />
 			<Partners />
 		</main>

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
 import { mcs, speakers } from '~~/conference';
 import { Framework } from '~~/helpers/constants.js';
 import { createBlankTicket } from '~~/helpers/utils';

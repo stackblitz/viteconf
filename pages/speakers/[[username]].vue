@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
 import { speakers } from '~~/conference';
 
 const route = useRoute();

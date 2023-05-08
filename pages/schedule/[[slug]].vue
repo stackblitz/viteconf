@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
 import { SpeakerData, speakers, talks } from '@@/conference';
 import { talkTitleToSlug } from '@@/helpers/utils';
 

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import '@@/assets/css/global.scss';
 import { discordLink } from '~~/helpers/constants';
 import { useSpeakerChatHead } from '../../composables/useHead';
 import { SpeakerData, speakers } from '../../conference';

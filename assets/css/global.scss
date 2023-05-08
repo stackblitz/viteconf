@@ -35,8 +35,6 @@ html {
 body {
 	overflow-x: hidden;
 
-	--initial-animation-curve: cubic-bezier(0.07, 0.42, 0.42, 0.93);
-
 	color: var(--app-color-light-contrast);
 	font-family: var(--app-font-family-base);
 
@@ -64,10 +62,6 @@ a {
 }
 
 * {
-	transition: background-color var(--transition-duration) ease-in,
-		background var(--transition-duration) ease-in;
-	transition-delay: 0;
-
 	outline: none;
 
 	-webkit-tap-highlight-color: transparent;
