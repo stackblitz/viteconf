@@ -107,6 +107,6 @@ main {
 		height: unset;
 	}
 	border-radius: 9px;
-	background-color: var(--app-color-shell); //#313338; //#37393f;
+	background-color: var(--app-color-shell);
 }
 </style>
