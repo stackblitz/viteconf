@@ -46,7 +46,7 @@ function copyUrl() {
 	navigator.clipboard.writeText(talkUrl);
 	copiedToClipboard = true;
 	setTimeout(() => {
-		copiedToClipboard = null;
+		copiedToClipboard = false;
 	}, 2000);
 }
 
@@ -55,7 +55,7 @@ onMounted(async () => {
 	await waitFor(20);
 
 	if (isFocused) {
-		talkEl.value.scrollIntoView({
+		talkEl.value?.scrollIntoView({
 			behavior: 'smooth',
 			block: 'center',
 		});
@@ -63,18 +63,23 @@ onMounted(async () => {
 });
 
 function formatTimeFromSeconds(seconds: number) {
-	const hours = Math.floor(seconds/(60*60))
-	const minutes = Math.floor((seconds - hours*60*60)/60)
-	return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
+	const hours = Math.floor(seconds / (60 * 60));
+	const minutes = Math.floor((seconds - hours * 60 * 60) / 60);
+	return `${hours.toString().padStart(2, '0')}:${minutes
+		.toString()
+		.padStart(2, '0')}`;
 }
 
 const talkStartTime = $computed(() => {
-	return replay ? formatTimeFromSeconds(talk.time) : toTalkStartTime(talk.start)
+	return replay
+		? formatTimeFromSeconds(talk.time!)
+		: toTalkStartTime(talk.start!);
 });
 const talkLocalStartTime = $computed(() => {
-	return replay ? formatTimeFromSeconds(talk.time) : toTalkStartLocaleTime(talk.start)
+	return replay
+		? formatTimeFromSeconds(talk.time!)
+		: toTalkStartLocaleTime(talk.start!);
 });
-
 </script>
 
 <template>
@@ -129,10 +134,20 @@ const talkLocalStartTime = $computed(() => {
 			/>
 			<div :class="`talk-info ${talk.participants ? ' no-logo' : ''}`">
 				<template v-if="!isBlank(talk)">
-					<p v-if="replay && main" @click="skipToTalk(talk)" style="cursor: pointer;" class="title">
+					<p
+						v-if="replay && main"
+						@click="skipToTalk(talk)"
+						style="cursor: pointer"
+						class="title"
+					>
 						{{ talk.shortTitle ?? talk.title }}
 					</p>
-					<NuxtLink v-else-if="released" :to="main ? `/2022/replay/${talk.key}` : talk.video" style="cursor: pointer;" class="title">
+					<NuxtLink
+						v-else-if="released"
+						:to="main ? `/2022/replay/${talk.key}` : talk.video"
+						style="cursor: pointer"
+						class="title"
+					>
 						{{ talk.shortTitle ?? talk.title }}
 					</NuxtLink>
 					<p v-else class="title">
@@ -144,7 +159,11 @@ const talkLocalStartTime = $computed(() => {
 						v-for="(participant, i) in talk.participants"
 						v-bind:key="i"
 						style="cursor: pointer"
-						:to="speakers[participant?.screenName] ? `/speakers/${participant?.screenName}` : `/tickets/${participant?.screenName}`"
+						:to="
+							speakers[participant?.screenName]
+								? `/speakers/${participant?.screenName}`
+								: `/tickets/${participant?.screenName}`
+						"
 						class="speaker"
 					>
 						{{ participant.displayName }}
@@ -152,7 +171,11 @@ const talkLocalStartTime = $computed(() => {
 				</template>
 				<template v-else>
 					<NuxtLink
-						:to="speakers[talk.speaker?.screenName] ? `/speakers/${talk.speaker?.screenName}` : `/tickets/${talk.speaker?.screenName}`"
+						:to="
+							speakers[talk.speaker?.screenName]
+								? `/speakers/${talk.speaker?.screenName}`
+								: `/tickets/${talk.speaker?.screenName}`
+						"
 						style="cursor: pointer"
 						class="speaker"
 						v-if="hasSpeaker(talk)"
@@ -554,8 +577,8 @@ $breakpoint-md: 760px;
 
 .talk-info .title:hover {
 	background-image: var(--app-background-gradient-light_violet);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 </style>
