@@ -10,11 +10,10 @@ onMounted(() => window.scrollTo?.({ behavior: 'smooth', top: 0 }));
 		<UserActions />
 		<main>
 			<HeroBanner />
+			<ConferenceInfoCta sgnupPage="https://viteconf.org" />
 			<a href="/2022/replay" class="social-button blue feature centered">
 				Watch last year's talks!
 			</a>
-			<ConferenceInfoCta sgnupPage="https://viteconf.org" />
-			<SpeakerList :focused-speaker="undefined" layout="grid" />
 			<SocialActions />
 			<Partners />
 		</main>
