@@ -11,7 +11,7 @@ onMounted(() => window.scrollTo?.({ behavior: 'smooth', top: 0 }));
 		<main>
 			<HeroBanner />
 			<a href="/2022/replay" class="social-button blue feature centered">
-				Watch the 2022 replay!
+				Watch last year's talks!
 			</a>
 			<ConferenceInfoCta sgnupPage="https://viteconf.org" />
 			<SpeakerList :focused-speaker="undefined" layout="grid" />
