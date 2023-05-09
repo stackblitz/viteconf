@@ -34,7 +34,6 @@ const chatOpen = useChatOpen();
 					<widgetbot
 						server="804011606160703521"
 						channel="997209205222158347"
-						shard="https://e-viteconf.widgetbot.co"
 						width="100%"
 						height="100%"
 					/>
