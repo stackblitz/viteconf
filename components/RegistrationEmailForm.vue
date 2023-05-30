@@ -16,8 +16,8 @@ onMounted(() => {
 const emailIsValid = (email: string): boolean =>
 	/^.+?@.+?\.[a-z]{2,}$/i.test(email);
 
-let validationError = $ref<string>(null);
-let registering = $ref(false);
+const validationError = ref<string | null>(null);
+const registering = ref(false);
 
 async function onSubmit(e: Event) {
 	e.preventDefault();
@@ -27,7 +27,7 @@ async function onSubmit(e: Event) {
 	for (const [key, value] of formData) {
 		if (key === 'email') {
 			if (!emailIsValid(value as string)) {
-				validationError = 'A valid email is required';
+				validationError.value = 'A valid email is required';
 				console.log('invalid email');
 				return;
 			}
@@ -35,7 +35,7 @@ async function onSubmit(e: Event) {
 	}
 
 	try {
-		registering = true;
+		registering.value = true;
 		// Can't use this until ActiveCampaign is fixed.
 		//		await fetch('https://stackblitz.activehosted.com/proc.php', {
 		//			method: 'POST',
@@ -54,9 +54,9 @@ async function onSubmit(e: Event) {
 		useTicket().value = createBlankTicket();
 		navigateTo({ path: '/welcome' });
 		window.scrollTo(0, 0);
-		registering = false;
+		registering.value = false;
 	} catch (e) {
-		registering = false;
+		registering.value = false;
 		console.error(e);
 	}
 }

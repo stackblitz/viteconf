@@ -7,10 +7,10 @@ const user = useUser();
 
 const smiggetEl = ref<HTMLDivElement>();
 
-let opaqueUserActions = $ref(false);
+const opaqueUserActions = ref(false);
 useIntersectionObserver(
 	smiggetEl,
-	([{ isIntersecting }]) => (opaqueUserActions = !isIntersecting)
+	([{ isIntersecting }]) => (opaqueUserActions.value = !isIntersecting)
 );
 </script>
 

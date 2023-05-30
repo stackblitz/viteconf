@@ -3,39 +3,35 @@ import { confetti } from '@neoconfetti/svelte';
 import { type Directive } from 'vue';
 import { waitFor } from '~~/helpers/wait-for';
 
-const { 
-	showLiveTalkLink,
-	isLive = false
-} = defineProps<{ 
-	showLiveTalkLink: boolean, 
-	isLive?: boolean 
+const { showLiveTalkLink, isLive = false } = defineProps<{
+	showLiveTalkLink: boolean;
+	isLive?: boolean;
 }>();
 
 const wrapUpEl = ref<HTMLDivElement>();
 
-const { upcomingTalks } = $(usePlayerCurrentSchedule());
+const { upcomingTalks } = usePlayerCurrentSchedule();
 
-let eventEnded = $ref(false);
+const eventEnded = ref(false);
 
-let throwConfetti = $ref(false);
-let socialActionsRevealed = $ref(false);
+const throwConfetti = ref(false);
+const socialActionsRevealed = ref(false);
 
-let confettiKey = $ref(0);
+const confettiKey = ref(0);
 
 watchEffect(() => {
-	if (upcomingTalks.length === 0) {
-		eventEnded = true;
-	}
-	else {
-		eventEnded = false;
-		throwConfetti = false;
-		confettiKey = 0;
-		socialActionsRevealed = false;		
+	if (upcomingTalks.value.length === 0) {
+		eventEnded.value = true;
+	} else {
+		eventEnded.value = false;
+		throwConfetti.value = false;
+		confettiKey.value = 0;
+		socialActionsRevealed.value = false;
 	}
 });
 
 watch(
-	$$(eventEnded),
+	eventEnded,
 	async (eventEnded) => {
 		if (eventEnded) {
 			await waitFor(1000);
@@ -46,16 +42,16 @@ watch(
 			});
 
 			await waitFor(800);
-			throwConfetti = true;
+			throwConfetti.value = true;
 
 			await waitFor(500);
-			socialActionsRevealed = true;
+			socialActionsRevealed.value = true;
 
 			await waitFor(2000);
-			confettiKey = 1;
+			confettiKey.value = 1;
 
 			await waitFor(2700);
-			confettiKey = 2;
+			confettiKey.value = 2;
 		}
 	},
 	{ immediate: true, flush: 'post' }

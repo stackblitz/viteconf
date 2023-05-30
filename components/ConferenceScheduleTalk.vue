@@ -33,9 +33,9 @@ const isBlank = (talk: TalkData) =>
 
 const hasSpeaker = (talk: TalkData) => talk.speaker?.displayName !== 'TBD';
 
-const talkHeight = $computed(() => `${talk.duration * 0.6}rem`);
+const talkHeight = computed(() => `${talk.duration * 0.6}rem`);
 
-let copiedToClipboard = $ref<boolean>();
+let copiedToClipboard = ref<boolean>();
 function copyUrl() {
 	const talkUrl =
 		'https://viteconf.org' +
@@ -44,9 +44,9 @@ function copyUrl() {
 			: scheduleLinkFromTalkTitle(talk.title));
 
 	navigator.clipboard.writeText(talkUrl);
-	copiedToClipboard = true;
+	copiedToClipboard.value = true;
 	setTimeout(() => {
-		copiedToClipboard = false;
+		copiedToClipboard.value = false;
 	}, 2000);
 }
 
@@ -70,12 +70,12 @@ function formatTimeFromSeconds(seconds: number) {
 		.padStart(2, '0')}`;
 }
 
-const talkStartTime = $computed(() => {
+const talkStartTime = computed(() => {
 	return replay
 		? formatTimeFromSeconds(talk.time!)
 		: toTalkStartTime(talk.start!);
 });
-const talkLocalStartTime = $computed(() => {
+const talkLocalStartTime = computed(() => {
 	return replay
 		? formatTimeFromSeconds(talk.time!)
 		: toTalkStartLocaleTime(talk.start!);

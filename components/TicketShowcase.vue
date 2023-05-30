@@ -25,77 +25,67 @@ const {
 	speakerName?: keyof typeof speakers | keyof typeof mcs;
 }>();
 
-const { width: bodyWidth } = $(
-	useElementSize(globalThis?.window?.document.body)
-);
+const { width: bodyWidth } = useElementSize(globalThis?.window?.document.body);
 
-let show = $ref(false);
+const show = ref(false);
 watchEffect(() => {
-	if (bodyWidth > 0) {
-		show = true;
+	if (bodyWidth.value > 0) {
+		show.value = true;
 	}
 });
 
-const ticketScale = $computed(() =>
-	bodyWidth >= 740 ? Math.min(1, (bodyWidth / 800) * 0.8) : 1
+const ticketScale = computed(() =>
+	bodyWidth.value >= 740 ? Math.min(1, (bodyWidth.value / 800) * 0.8) : 1
 );
 
-const ticketType = $computed(() =>
-	bodyWidth < 740 ? 'portrait' : 'landscape'
-);
-
-const ticketSize = $computed(() =>
-	ticketType === 'portrait'
-		? { width: '400px', height: '650px' }
-		: { width: '800px', height: '375px' }
-);
+const ticketSize = computed(() => ({ width: '400px', height: '650px' }));
 
 const { x, y } = useMouse();
 
-const ticketInnerRef = ref<HTMLDivElement>(null);
+const ticketInnerRef = ref<HTMLDivElement>();
 const {
 	left: ticketLeft,
 	top: ticketTop,
 	width: ticketWidth,
 	height: ticketHeight,
-} = $(useElementBounding(ticketInnerRef));
+} = useElementBounding(ticketInnerRef);
 
-const origin = $computed(() => ({
-	x: ticketLeft + Math.floor(ticketWidth / 2),
-	y: ticketTop + Math.floor(ticketHeight / 2) / 10,
+const origin = computed(() => ({
+	x: ticketLeft.value + Math.floor(ticketWidth.value / 2),
+	y: ticketTop.value + Math.floor(ticketHeight.value / 2) / 10,
 }));
 
 const animationSpeed = 250;
-let animateState = $ref('initial');
+const animateState = ref('initial');
 onMounted(() => {
-	setTimeout(() => (animateState = 'middle'), animationSpeed);
-	setTimeout(() => (animateState = 'go-back'), animationSpeed * 2);
-	setTimeout(() => (animateState = 'center'), animationSpeed * 3);
-	setTimeout(() => (animateState = 'end'), animationSpeed * 4);
+	setTimeout(() => (animateState.value = 'middle'), animationSpeed);
+	setTimeout(() => (animateState.value = 'go-back'), animationSpeed * 2);
+	setTimeout(() => (animateState.value = 'center'), animationSpeed * 3);
+	setTimeout(() => (animateState.value = 'end'), animationSpeed * 4);
 });
 
-const position = $computed(() => {
-	const width = ticketWidth,
-		height = ticketHeight;
+const position = computed(() => {
+	const width = ticketWidth.value,
+		height = ticketHeight.value;
 	let xn, yn;
-	if (animateState === 'end' && !(x.value === 0 && y.value === 0)) {
+	if (animateState.value === 'end' && !(x.value === 0 && y.value === 0)) {
 		xn = x.value;
 		yn = y.value;
 	} else {
-		if (animateState === 'initial') {
-			xn = origin.x - width / 4;
-		} else if (animateState === 'middle') {
-			xn = origin.x + width / 8;
-		} else if (animateState === 'go-back') {
-			xn = origin.x - width / 16;
+		if (animateState.value === 'initial') {
+			xn = origin.value.x - width / 4;
+		} else if (animateState.value === 'middle') {
+			xn = origin.value.x + width / 8;
+		} else if (animateState.value === 'go-back') {
+			xn = origin.value.x - width / 16;
 		} else {
-			xn = origin.x;
+			xn = origin.value.x;
 		}
-		yn = origin.y;
+		yn = origin.value.y;
 	}
 	return {
-		x: clamp(xn - origin.x, -width / 2, height / 2),
-		y: clamp(-(yn - origin.y), -width / 2, height / 2),
+		x: clamp(xn - origin.value.x, -width / 2, height / 2),
+		y: clamp(-(yn - origin.value.y), -width / 2, height / 2),
 	};
 });
 
@@ -103,10 +93,10 @@ function getPerspectiveTransform(x: number, y: number) {
 	return `rotateX(${x.toFixed(2)}deg) rotateY(${y.toFixed(2)}deg)`;
 }
 
-const perspectiveTransform = $computed(() => {
+const perspectiveTransform = computed(() => {
 	const transform = getPerspectiveTransform(
-		position.y / ticketHeight / 1.8,
-		position.x / ticketWidth / 1.8
+		position.value.y / ticketHeight.value / 1.8,
+		position.value.x / ticketWidth.value / 1.8
 	);
 	return transform;
 });
@@ -114,7 +104,7 @@ const perspectiveTransform = $computed(() => {
 
 <template>
 	<div v-show="show" class="ticket-section">
-		<div :class="`${ticketType} ticket-container`">
+		<div :class="`portrait ticket-container`">
 			<div
 				class="ticket-inner"
 				ref="ticketInnerRef"
@@ -128,7 +118,6 @@ const perspectiveTransform = $computed(() => {
 					:og="og"
 					:original="original"
 					:ready="ready"
-					:ticketType="ticketType"
 					:framework="framework"
 					:forceShowFrameworkLogo="forceShowFrameworkLogo"
 					:speakerName="speakerName"

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { currentTalk, upcomingTalks } = $(usePlayerCurrentSchedule());
+const { currentTalk, upcomingTalks } = usePlayerCurrentSchedule();
 
 const talk = useTalkFromRoute();
 
@@ -8,7 +8,7 @@ useReplayHead(talk);
 onMounted(() => {
 	import('@widgetbot/html-embed');
 
-	if (upcomingTalks.length > 0) {
+	if (upcomingTalks.value.length > 0) {
 		window.scrollTo({
 			behavior: 'smooth',
 			top: 0,

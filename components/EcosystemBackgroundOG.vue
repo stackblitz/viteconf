@@ -13,7 +13,7 @@ const { height: backgroundCoverHeight } = useElementSize(
 	}
 );
 
-let backgroundEl = $ref<HTMLDivElement>();
+const backgroundEl = ref<HTMLDivElement>();
 </script>
 
 <template>

@@ -20,17 +20,17 @@ const {
 
 const user = useFirebaseUser();
 
-let appliedFocusStyles = $ref(false);
+const appliedFocusStyles = ref(false);
 
 const blankColor = '#888888';
-const brandColor = $computed<string>(
+const brandColor = computed<string>(
 	() => speaker.project?.brandColor ?? blankColor
 );
-const backgroundColor = $computed(
-	() => brandColor + (appliedFocusStyles ? '35' : '20')
+const backgroundColor = computed(
+	() => brandColor.value + (appliedFocusStyles.value ? '35' : '20')
 );
-const borderColor = $computed(() => brandColor + '44');
-const innerBorderColor = $computed(() => brandColor + 'bb');
+const borderColor = computed(() => brandColor.value + '44');
+const innerBorderColor = computed(() => brandColor.value + 'bb');
 
 const shareOnTwitter = async (speaker: SpeakerData) => {
 	const speakerUrl = `https://viteconf.org/speakers/${speaker?.screenName}?share`;
@@ -73,8 +73,8 @@ const speakerCompanyText = (speaker: SpeakerData): string[] => {
 	return text;
 };
 
-const backgroundGradientTransparency = $computed(() =>
-	appliedFocusStyles ? 160 : 70
+const backgroundGradientTransparency = computed(() =>
+	appliedFocusStyles.value ? 160 : 70
 );
 
 let speakerCard = ref<HTMLDivElement>();
@@ -83,7 +83,7 @@ onMounted(async () => {
 	await waitFor(20);
 
 	if (focus) {
-		speakerCard.value.scrollIntoView({
+		speakerCard.value?.scrollIntoView({
 			behavior: 'smooth',
 			block: 'center',
 		});
@@ -91,10 +91,10 @@ onMounted(async () => {
 
 	await waitFor(1000);
 
-	appliedFocusStyles = focus;
+	appliedFocusStyles.value = focus;
 });
 
-const username = $computed(() => speaker.screenName.toLowerCase());
+const username = computed(() => speaker.screenName.toLowerCase());
 </script>
 
 <template>

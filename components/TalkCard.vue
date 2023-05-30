@@ -6,7 +6,7 @@ const { talk } = defineProps<{
 	talk: TalkData;
 }>();
 
-const speaker = $computed(() => talk.speaker);
+const speaker = computed(() => talk.speaker);
 
 function toTalkStartTime(t: Date) {
 	return t?.toISOString().substring(11, 16);

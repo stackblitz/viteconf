@@ -2,7 +2,7 @@
 import SunIcon from '~icons/material-symbols/wb-sunny-outline';
 import MoonIcon from '~icons/ph/moon-bold';
 
-const { isDark, toggleTheme } = $(useTheme());
+const { isDark, toggleTheme } = useTheme();
 </script>
 
 <template>

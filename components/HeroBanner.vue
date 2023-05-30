@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-let animateBg = $ref(false);
+let animateBg = ref(false);
 onMounted(() => {
 	const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 	if (!isSafari) {
-		animateBg = true;
+		animateBg.value = true;
 	}
 });
 </script>

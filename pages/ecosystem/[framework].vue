@@ -50,7 +50,6 @@ useHead({
 					:og="false"
 					:framework="framework"
 					:ready="false"
-					ticketType="landscape"
 					:force-show-framework-logo="true"
 				/>
 			</div>

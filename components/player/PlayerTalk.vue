@@ -3,14 +3,11 @@ import '@fontsource/roboto-mono/500.css';
 import DiscordIcon from '~icons/mdi/discord';
 import PrevIcon from '~icons/mdi/skip-previous';
 import NextIcon from '~icons/mdi/skip-next';
-import {
-	liveTwitterMessagesShareTalk,
-	TalkData,
-} from '~~/conference';
+import { liveTwitterMessagesShareTalk, TalkData } from '~~/conference';
 import { discordLink, liveTranscriptsLink } from '~~/helpers/constants';
 
-const player = $(usePlayerVideo());
-const { previousTalk, nextTalk } = $(usePlayerCurrentSchedule());
+const player = usePlayerVideo();
+const { previousTalk, nextTalk } = usePlayerCurrentSchedule();
 
 const { talk, isLive = false } = defineProps<{
 	isLive?: boolean;
@@ -19,12 +16,12 @@ const { talk, isLive = false } = defineProps<{
 
 const hasSpeaker = (talk: TalkData) => talk.speaker?.displayName !== 'TBD';
 
-let discordProtocol = $ref(false);
-let showMode = $ref(false);
+const discordProtocol = ref(false);
+const showMode = ref(false);
 
 const share = async () => {
 	let tweetText: string;
-	
+
 	if (!talk.speaker || talk.speaker.displayName === 'TBD') {
 		tweetText = isLive ? `I am watching ViteConf live! Come watch!` : ``;
 	} else {
@@ -33,10 +30,11 @@ const share = async () => {
 			messages[Math.floor(Math.random() * messages.length)] ?? messages[0];
 
 		tweetText = message(talk.speaker);
-		
 	}
-	
-	const baseUrl = isLive ? 'https://viteconf.org/live' : 'https://viteconf.org/2022/replay';
+
+	const baseUrl = isLive
+		? 'https://viteconf.org/live'
+		: 'https://viteconf.org/2022/replay';
 
 	const url = `${baseUrl}/${talk.key}`;
 
@@ -46,16 +44,18 @@ const share = async () => {
 };
 
 function getDiscordChatLink() {
-	return `${discordProtocol ? 'discord://' : 'https://'}${talk.speaker?.chat ?? (talk.participants?.[0].chat ?? discordLink) }`;
+	return `${discordProtocol.value ? 'discord://' : 'https://'}${
+		talk.speaker?.chat ?? talk.participants?.[0].chat ?? discordLink
+	}`;
 }
 
 let timeout;
 function toggleDiscordProtocol() {
-	discordProtocol = !discordProtocol;
-	showMode = true;
+	discordProtocol.value = !discordProtocol.value;
+	showMode.value = true;
 	clearTimeout(timeout);
 	timeout = setTimeout(() => {
-		showMode = false;
+		showMode.value = false;
 	}, 2000);
 }
 </script>
@@ -73,7 +73,7 @@ function toggleDiscordProtocol() {
 					<button
 						title="Previous Talk"
 						class="social-button previous-talk"
-						:disabled="player && !previousTalk"
+						:disabled="!!player && !previousTalk"
 						@click="skipToTalk(previousTalk)"
 					>
 						<PrevIcon />
@@ -81,7 +81,7 @@ function toggleDiscordProtocol() {
 					<button
 						title="Next Talk"
 						class="social-button next-talk"
-						:disabled="player && !nextTalk"
+						:disabled="!!player && !nextTalk"
 						@click="skipToTalk(nextTalk)"
 					>
 						<NextIcon />
@@ -125,17 +125,27 @@ function toggleDiscordProtocol() {
 				</div>
 			</div>
 			<div :class="`actions${showMode ? ' show-mode' : ''}`">
-				<a v-if="isLive" target="_blank" class="social-button" :href="liveTranscriptsLink">
+				<a
+					v-if="isLive"
+					target="_blank"
+					class="social-button"
+					:href="liveTranscriptsLink"
+				>
 					Transcript
 				</a>
 				<button class="social-button share" @click="share">Share</button>
-				<a target="_blank" class="social-button discuss" :href="getDiscordChatLink()">{{
-					showMode
-						? discordProtocol
-							? 'Open in App'
-							: 'Open in Tab'
-						: 'Discuss'
-				}}</a>
+				<a
+					target="_blank"
+					class="social-button discuss"
+					:href="getDiscordChatLink()"
+					>{{
+						showMode
+							? discordProtocol
+								? 'Open in App'
+								: 'Open in Tab'
+							: 'Discuss'
+					}}</a
+				>
 				<button
 					:title="
 						discordProtocol
@@ -367,7 +377,8 @@ button.discord-button:hover {
 }
 
 @media screen and (max-width: 1200px) {
-	.actions .discord-button, .actions .discuss {
+	.actions .discord-button,
+	.actions .discuss {
 		display: none;
 	}
 }

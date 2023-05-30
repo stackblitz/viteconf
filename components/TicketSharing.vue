@@ -19,13 +19,13 @@ async function shareOnTwitter() {
 	window.location.href = twitterUrl;
 }
 
-let copiedToClipboard = $ref<string>();
+const copiedToClipboard = ref<string | null>(null);
 
 function copyUrl() {
 	navigator.clipboard.writeText(ticketUrl);
-	copiedToClipboard = ticketUrl;
+	copiedToClipboard.value = ticketUrl;
 	setTimeout(() => {
-		copiedToClipboard = null;
+		copiedToClipboard.value = null;
 	}, 2000);
 }
 

@@ -3,9 +3,7 @@ import { vFocusTrap } from '#imports';
 import { useLocalStorage } from '@vueuse/core';
 import { liveTranscriptsLink } from '~~/helpers/constants';
 
-const {
-	isLive = false
-} = defineProps<{
+const { isLive = false } = defineProps<{
 	isLive?: Boolean;
 }>();
 
@@ -15,42 +13,44 @@ const dispatch = defineEmits<{
 }>();
 
 // Accept CoC agreement from live page
-let livePageDialogDismissed = $(
-	useLocalStorage('viteconf:livePageDialogDismissed', false)
+let livePageDialogDismissed = useLocalStorage(
+	'viteconf:livePageDialogDismissed',
+	false
 );
-let playerDialogDismissed = $(
-	useLocalStorage('viteconf:2022:playerDialogDismissed', false)
+let playerDialogDismissed = useLocalStorage(
+	'viteconf:2022:playerDialogDismissed',
+	false
 );
 
 const full = useFullLogo();
 
-let dialogEl = ref<HTMLDivElement>();
+const dialogEl = ref<HTMLDivElement>();
 
-let isOpen = $ref(false);
+const isOpen = ref(false);
 
 function open() {
 	dispatch('open');
-	isOpen = true;
+	isOpen.value = true;
 }
 
 function close(message?: string) {
 	dispatch('close', message);
 
-	isOpen = false;
+	isOpen.value = false;
 
-	playerDialogDismissed = true;
+	playerDialogDismissed.value = true;
 
 	hideFullLogo();
 }
 
 watchEffect(() => {
 	if (globalThis.document?.body)
-		globalThis.document.body.style.overflowY = isOpen ? 'hidden' : '';
+		globalThis.document.body.style.overflowY = isOpen.value ? 'hidden' : '';
 });
 
 watchEffect(() => {
 	if (!import.meta.env.SSR) {
-		if (!livePageDialogDismissed && !playerDialogDismissed) {
+		if (!livePageDialogDismissed.value && !playerDialogDismissed.value) {
 			open();
 		} else {
 			hideFullLogo();
@@ -101,7 +101,9 @@ defineExpose({
 						<a href="https://chat.vitejs.dev" target="_blank"
 							><span
 								>Join <strong>chat.vitejs.dev</strong><br />
-								{{ `Chat with the ${isLive ? 'speakers' : 'community'}!` }}</span
+								{{
+									`Chat with the ${isLive ? 'speakers' : 'community'}!`
+								}}</span
 							></a
 						>
 					</div>
@@ -122,7 +124,11 @@ defineExpose({
 				</section>
 
 				<button class="dialog-cta" @click="close()">
-					{{ `I agree with the Code of Conduct. Let's ${isLive ? 'join' : 'watch'}!` }}
+					{{
+						`I agree with the Code of Conduct. Let's ${
+							isLive ? 'join' : 'watch'
+						}!`
+					}}
 				</button>
 			</div>
 		</section>

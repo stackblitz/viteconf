@@ -3,7 +3,7 @@ import { useLiveHead } from '~~/composables/useHead';
 import { talks } from '~~/conference';
 import { talkTitleToSlug } from '~~/helpers/utils';
 
-const { currentTalk, upcomingTalks } = $(usePlayerCurrentSchedule());
+const { currentTalk, upcomingTalks } = usePlayerCurrentSchedule();
 
 useMainHead();
 
@@ -27,7 +27,7 @@ if (!talk) {
 onMounted(() => {
 	import('@widgetbot/html-embed');
 
-	if (upcomingTalks.length > 0)
+	if (upcomingTalks.value.length > 0)
 		window.scrollTo({
 			behavior: 'smooth',
 			top: 0,

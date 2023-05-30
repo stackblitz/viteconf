@@ -5,13 +5,11 @@ import { createBlankTicket, logoPath } from '../helpers/utils';
 
 const {
 	speakerName,
-	ticketType = 'landscape',
 	ready = true,
 	og = false,
 	framework: frameworkProp = 'Vite',
 	forceShowFrameworkLogo = false,
 } = defineProps<{
-	ticketType?: 'landscape' | 'portrait';
 	ready?: boolean;
 	og?: boolean;
 
@@ -35,121 +33,113 @@ const {
 
 const ticketHeight = 375;
 const rs = ticketHeight * 0.04;
-
-const ts = $computed(() =>
-	ticketType === 'landscape'
-		? {
-				viteconf: 4.27 * rs + 'px',
-				displayName: 1.6 * rs + 'px',
-				screenName: 1.1 * rs + 'px',
-				details: 1.2 * rs + 'px',
-				ticketNumber: 1.8 * rs + 'px',
-				dates: 2 * rs + 'px',
-				avatar: 4 * rs + 'px',
-				framework: 2.2 * rs + 'px',
-				notchLeft: '560px',
-				notchWidth: '200px',
-		  }
-		: {
-				viteconf: 3.3 * rs + 'px',
-				displayName: 1.3 * rs + 'px',
-				screenName: 1 * rs + 'px',
-				details: 1.1 * rs + 'px',
-				ticketNumber: 1.5 * rs + 'px',
-				dates: 1.5 * rs + 'px',
-				avatar: 4 * rs + 'px',
-				framework: 2 * rs + 'px',
-				notchLeft: '130px',
-				notchWidth: '244px',
-		  }
-);
+const ts = {
+	viteconf: 3.3 * rs + 'px',
+	displayName: 1.3 * rs + 'px',
+	screenName: 1 * rs + 'px',
+	details: 1.1 * rs + 'px',
+	ticketNumber: 1.5 * rs + 'px',
+	dates: 1.5 * rs + 'px',
+	avatar: 4 * rs + 'px',
+	framework: 2 * rs + 'px',
+	notchLeft: '130px',
+	notchWidth: '244px',
+};
 
 const mono = `Menlo, 'Courier New', monospace`;
-const screenNameFont = $ref(mono);
+const screenNameFont = ref(mono);
 
-let ticket = $(useTicket());
+let ticket = useTicket();
 
-const speakerInfo = $computed<SpeakerData>(() => {
+const speakerInfo = computed<SpeakerData>(() => {
 	const name =
-		ticket && ticket.ticketNumber > 0
-			? ticket.screenName?.toLocaleLowerCase()
+		ticket.value && ticket.value.ticketNumber > 0
+			? ticket.value.screenName?.toLocaleLowerCase()
 			: speakerName;
 	return speakers[name] ?? mcs[name];
 });
 
-const isSpecial = $computed(() => !!speakerInfo && !speakerInfo.showOriginal);
-const isMC = $computed(() => isSpecial && !speakers[speakerName]);
+const isSpecial = computed(
+	() => !!speakerInfo.value && !speakerInfo.value.showOriginal
+);
+const isMC = computed(() => isSpecial.value && !speakers[speakerName]);
 
 // In case its a speaker who hasn't registered yet
-if (isSpecial && (ticket === null || ticket?.ticketNumber === 0)) {
+if (
+	isSpecial.value &&
+	(ticket.value === null || ticket.value?.ticketNumber === 0)
+) {
 	const localTicket = createBlankTicket();
-	localTicket.displayName = speakerInfo.displayName;
-	localTicket.favoriteFrameworks = speakerInfo.project.name as Framework;
+	localTicket.displayName = speakerInfo.value.displayName;
+	localTicket.favoriteFrameworks = speakerInfo.value.project.name as Framework;
 	localTicket.ticketNumber = 999999;
-	localTicket.photo = speakerInfo.avatar;
+	localTicket.photo = speakerInfo.value.avatar ?? '';
 	localTicket.isSpeaker = true;
-	localTicket.screenName = speakerInfo.screenName;
+	localTicket.screenName = speakerInfo.value.screenName;
 	localTicket.uid = 'TODO';
 
-	ticket = localTicket;
+	ticket.value = localTicket;
 }
 
 const blankColor = '#888888';
 
-const framework = $computed(() => {
-	if (ticket?.ticketNumber === 0) {
+const framework = computed(() => {
+	if (ticket.value?.ticketNumber === 0) {
 		// Means the person is not logged in or whatever, apply the route based framework
 		return frameworkProp as Framework;
 	}
 
-	if (isSpecial) {
-		return speakerInfo.project.name as Framework;
+	if (isSpecial.value) {
+		return speakerInfo.value.project.name as Framework;
 	}
 
-	const favoriteFrameworks = ticket?.favoriteFrameworks;
+	const favoriteFrameworks = ticket.value?.favoriteFrameworks;
 
 	return (
 		favoriteFrameworks ? favoriteFrameworks.split(',')[0] : 'vite'
 	) as Framework;
 });
 
-const frameworkColor = $computed<string>(() => {
-	const color = projects[framework.toLowerCase()]?.brandColor ?? blankColor;
+const frameworkColor = computed<string>(() => {
+	const color =
+		projects[framework.value.toLowerCase()]?.brandColor ?? blankColor;
 	return color;
 });
 
-const frameworkPlayground = $computed(() => {
-	const project = projects[framework.toLowerCase()];
+const frameworkPlayground = computed(() => {
+	const project = projects[framework.value.toLowerCase()];
 	return project?.playground ?? project?.url ?? `https://vite.new`;
 });
 
-const backgroundColor = $computed(() => frameworkColor + '1f');
-const borderColor = $computed(() => frameworkColor + (isSpecial ? 'ff' : '33'));
-const innerBorderColor = $computed(() => frameworkColor + 'bb');
+const backgroundColor = computed(() => frameworkColor.value + '1f');
+const borderColor = computed(
+	() => frameworkColor.value + (isSpecial.value ? 'ff' : '33')
+);
+const innerBorderColor = computed(() => frameworkColor.value + 'bb');
 
-const secondaryColor = $computed(
+const secondaryColor = computed(
 	() =>
-		projects[framework?.toLowerCase() as keyof typeof projects]
-			?.secondaryColor ?? frameworkColor
+		projects[framework.value.toLowerCase() as keyof typeof projects]
+			?.secondaryColor ?? frameworkColor.value
 );
 
-const ticketNumber = $computed(() => {
-	const tn = ticket?.ticketNumber ?? 0;
+const ticketNumber = computed(() => {
+	const tn = ticket.value?.ticketNumber ?? 0;
 	return `#${
 		tn === 5173 || tn === 999999 ? '00VITE' : tn.toFixed().padStart(6, '0')
 	}`;
 });
 
-const valid = $computed(
-	() => forceShowFrameworkLogo || ticket?.ticketNumber > 0
+const valid = computed(
+	() => forceShowFrameworkLogo || ticket.value?.ticketNumber > 0
 );
 
 const asciiRE = /[^\x00-\x7F]/g;
-const displayName = $computed(() => {
-	if (og && ticket?.displayName?.match(asciiRE)) {
-		return ticket?.screenName;
+const displayName = computed(() => {
+	if (og && ticket.value?.displayName?.match(asciiRE)) {
+		return ticket.value?.screenName;
 	} else {
-		return ticket?.displayName;
+		return ticket.value?.displayName;
 	}
 });
 </script>
@@ -158,7 +148,6 @@ const displayName = $computed(() => {
 	<div
 		class="ticket"
 		:class="[
-			ticketType,
 			{
 				valid,
 				blank: !valid || forceShowFrameworkLogo,
@@ -205,17 +194,6 @@ const displayName = $computed(() => {
 					speakerInfo?.section
 				}}
 			</a>
-			<div class="hole"></div>
-			<div class="left-neck">
-				<div class="left-neck-image">
-					<div class="left-neck-content"></div>
-				</div>
-			</div>
-			<div class="right-neck">
-				<div class="right-neck-image">
-					<div class="right-neck-content"></div>
-				</div>
-			</div>
 			<div class="user-info">
 				<div class="user-info-inner">
 					<div class="user-avatar">
@@ -258,14 +236,8 @@ const displayName = $computed(() => {
 				/>
 			</div>
 			<div class="viteconf-info">
-				<span class="viteconf-heading">
-					ViteConf{{ ticketType === 'landscape' ? ' 2022' : '' }}
-				</span>
-				<span class="viteconf-dates">
-					OCTOBER 11-12
-					{{ ticketType === 'landscape' ? '' : ', 2022' }}
-					{{ ticketType === 'landscape' ? ' • Online' : '' }}
-				</span>
+				<span class="viteconf-heading"> ViteConf </span>
+				<span class="viteconf-dates"> OCTOBER 11-12, 2022' </span>
 			</div>
 			<div class="conference-details">
 				<div class="conference-details-inner">
@@ -311,23 +283,6 @@ const displayName = $computed(() => {
 	transition: border-color 1s;
 	position: relative;
 
-	grid-template-columns: 38% 1fr 30%;
-	grid-template-rows: 15% 5% 50% 1fr;
-	grid-template-areas:
-		'user-info     .                  ticket-number'
-		'user-info     .                  .'
-		'viteconf-logo viteconf-info      viteconf-info'
-		'viteconf-logo conference-details conference-details';
-	// transition: 0.75s ease;
-	// transition-property: filter, border-color;
-}
-
-.speaker .ticket-inner-content {
-	border: 4px solid transparent;
-	border-radius: 25px;
-}
-
-.portrait .ticket-inner-content {
 	grid-template-columns: 100%;
 	grid-template-rows: 70px 120px 200px 1fr 100px;
 	grid-template-areas:
@@ -339,6 +294,11 @@ const displayName = $computed(() => {
 	@media screen and (max-width: 400px) {
 		grid-template-rows: 50px 100px 220px 100px 180px;
 	}
+}
+
+.speaker .ticket-inner-content {
+	border: 4px solid transparent;
+	border-radius: 25px;
 }
 
 .notch {
@@ -393,14 +353,8 @@ const displayName = $computed(() => {
 
 .framework-logo {
 	grid-area: framework-logo;
-	// opacity: 0;
-	// transition: opacity 0.75s;
 }
-/*
-.ready .framework-logo {
-	opacity: 1;
-}
-*/
+
 .conference-details {
 	grid-area: conference-details;
 	display: grid;
@@ -490,11 +444,7 @@ const displayName = $computed(() => {
 	font-family: v-bind(screenNameFont);
 	opacity: 0.9;
 }
-/*
-.ready .screen-name {
-	opacity: 0.8;
-}
-*/
+
 .screen-name:hover {
 	opacity: 1;
 }
@@ -508,32 +458,23 @@ const displayName = $computed(() => {
 	line-height: 1.2;
 	width: 600px;
 	overflow: visible;
-	// opacity: 0;
 }
-/*
-.ready .display-name {
-	opacity: 0.8;
-}
-*/
 .blank .display-name {
 	opacity: 0.4;
 }
 .user-avatar {
-	transform: translate(5px, 8px);
 	width: 100%;
 	height: 100%;
 	position: relative;
 	display: grid;
 	align-items: center;
 	justify-items: center;
-}
-
-.portrait .user-avatar {
 	transform: translate(5px, 0px);
 	@media screen and (max-width: 400px) {
 		transform: scale(0.8);
 	}
 }
+
 .user-avatar img {
 	margin: auto;
 	max-width: v-bind('ts.avatar');
@@ -541,11 +482,6 @@ const displayName = $computed(() => {
 	display: block;
 	border-radius: 50%;
 }
-/*
-.ready .user-avatar img {
-	opacity: 0.8;
-}
-*/
 
 .blank .user-avatar img {
 	opacity: 0.4;
@@ -564,17 +500,9 @@ const displayName = $computed(() => {
 	font-weight: 900;
 	justify-self: end;
 	margin: 3% 10%;
-	text-align: end;
-	// opacity: 0;
-	transition: opacity 0.75s;
-}
-/*
-.ready .ticket-number p {
-	opacity: 0.9;
-}
-*/
-.portrait .ticket-number p {
 	margin-right: 14px;
+	text-align: end;
+	transition: opacity 0.75s;
 }
 
 .blank .ticket-number {
@@ -584,40 +512,27 @@ const displayName = $computed(() => {
 .speaker-span {
 	position: absolute;
 	top: 42px;
-	right: 28px;
-	font-size: 1.3rem;
-	font-weight: 700;
-	color: v-bind(secondaryColor);
-}
-.portrait .speaker-span {
 	right: 17px;
 	font-size: 1.1rem;
+	font-weight: 700;
+	color: v-bind(secondaryColor);
 }
 
 .speaker-talk-title {
 	position: absolute;
-	bottom: 10px;
-	left: 28px;
 	font-size: 1.5rem;
 	font-weight: 700;
 	color: v-bind(secondaryColor);
-}
-.speaker-talk-time {
-	position: absolute;
-	bottom: 40px;
-	left: 28px;
-	font-size: 1.2rem;
-	font-weight: 600;
-	opacity: 0.8;
-}
-
-.portrait .speaker-talk-title {
 	text-align: center;
 	width: 100%;
 	left: 0;
 	bottom: 270px;
 }
-.portrait .speaker-talk-time {
+.speaker-talk-time {
+	position: absolute;
+	font-size: 1.2rem;
+	font-weight: 600;
+	opacity: 0.8;
 	text-align: center;
 	width: 100%;
 	left: 0;
@@ -627,11 +542,6 @@ const displayName = $computed(() => {
 .framework-logo {
 	border-radius: 0;
 	position: absolute;
-	top: 12px;
-	right: 163px;
-}
-
-.portrait .framework-logo {
 	top: 18px;
 	left: 25px;
 	@media screen and (max-width: 400px) {
@@ -649,11 +559,6 @@ const displayName = $computed(() => {
 	opacity: 0.9;
 	transition: opacity 0.75s ease-in, filter 0.2s ease-in;
 }
-/*
-.ready .framework-logo img {
-	opacity: 0.75;
-}
-*/
 .framework-logo img:hover {
 	opacity: 1;
 	cursor: pointer;
@@ -666,12 +571,8 @@ const displayName = $computed(() => {
 
 .viteconf-logo {
 	display: grid;
-	justify-items: center;
 	align-items: center;
 	position: relative;
-}
-
-.portrait .viteconf-logo {
 	justify-items: center;
 	margin-left: 0;
 }
@@ -679,24 +580,15 @@ const displayName = $computed(() => {
 .viteconf-logo-svg {
 	position: relative;
 	object-fit: contain;
-	width: 70%;
-	height: 70%;
+	width: 160px;
+	height: 160px;
 }
 
 .speaker .viteconf-logo-svg {
 	filter: drop-shadow(0 0 2em #ffffff44);
-	width: 50%;
-	height: 50%;
-	transform: translate(-25px, -25px);
-}
-.portrait.speaker .viteconf-logo-svg {
 	width: 55%;
 	height: 55%;
 	transform: translate(0, -45px);
-}
-.portrait .viteconf-logo-svg {
-	width: 160px;
-	height: 160px;
 }
 .viteconf-logo-bg {
 	position: absolute;
@@ -715,27 +607,19 @@ const displayName = $computed(() => {
 
 .viteconf-info {
 	display: grid;
-	justify-items: left;
-	grid-template-rows: 3fr 1fr;
-}
-
-.portrait .viteconf-info {
 	justify-items: center;
 	grid-template-rows: 1fr 1.2fr;
 }
+
 .viteconf-heading {
 	font-size: v-bind('ts.viteconf');
 	line-height: v-bind('ts.viteconf');
 	font-weight: 700;
 	letter-spacing: -1px;
-	align-self: end;
+	align-self: start;
 	background-image: var(--app-background-gradient);
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
-}
-
-.portrait .viteconf-heading {
-	align-self: start;
 }
 
 .viteconf-dates {
@@ -747,118 +631,6 @@ const displayName = $computed(() => {
 	@media screen and (max-width: 400px) {
 		padding-top: 16px;
 	}
-}
-
-.left-neck {
-	width: 90px;
-	height: 330px;
-	top: -349px;
-	left: 110px;
-	z-index: -2;
-	transform: skew(45deg);
-	position: absolute;
-	display: flex;
-	flex-direction: row-reverse;
-	background-color: rgb(178, 178, 178, 0.15);
-	overflow: hidden;
-	@media screen and (max-width: 400px) {
-		display: none;
-	}
-}
-.left-neck-image {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	transform: skew(-45deg);
-}
-.left-neck-image-content {
-	top: 115px;
-	left: -248px;
-	content: '';
-	width: 500px;
-	height: 36px;
-	transform: rotate(45deg);
-	background-size: 75px;
-	position: absolute;
-	filter: grayscale(1);
-	opacity: 0.09;
-}
-.right-neck {
-	--clipMargin: 40px;
-	z-index: 2;
-	width: 90px;
-	height: 331px;
-	top: -255px;
-	right: 210px;
-
-	transform: skew(-45deg);
-	position: absolute;
-	display: flex;
-	flex-direction: row-reverse;
-	background-color: rgb(178, 178, 178, 0.2);
-	border: 1px solid rgb(178, 178, 178, 0.3);
-	overflow: hidden;
-	clip-path: polygon(
-		0 0,
-		100% 0,
-		100% calc(100% - var(--clipMargin)),
-		0 calc(100% - var(--clipMargin))
-	);
-	@media screen and (max-width: 400px) {
-		display: none;
-	}
-}
-.right-neck-image {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	transform: skew(45deg);
-}
-.right-neck-image-content {
-	top: 60px;
-	left: -140px;
-	content: '';
-	width: 500px;
-	height: 36px;
-	transform: rotate(-45deg);
-	background-size: 75px;
-	position: absolute;
-	filter: grayscale(1);
-	opacity: 0.09;
-}
-
-.hole {
-	position: absolute;
-	left: 50%;
-	top: 11%;
-	transform: translate(-50%, calc(-50% - 8%));
-	width: 16%;
-	height: 3%;
-	background: rgb(0, 0, 0);
-	border: 2px solid rgb(178, 178, 178, 0.5);
-	border-radius: 4px;
-	opacity: 0.5;
-	@media screen and (max-width: 400px) {
-		display: none;
-	}
-}
-
-.portrait .hole {
-	top: 38px;
-	width: 80px;
-	height: 12px;
-}
-.portrait .left-neck {
-	width: 60px;
-	height: 330px;
-	top: -342px;
-	left: -50px;
-}
-.portrait .right-neck {
-	width: 60px;
-	height: 330px;
-	top: -254px;
-	right: 31px;
 }
 
 .ticket.speaker::before {

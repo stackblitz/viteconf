@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-const { speaker } = defineProps({ speaker: Object });
+const { speaker } = defineProps({ speaker: { type: Object, required: true } });
 
 const blankColor = '#888888';
 
-const brandColor = $computed<string>(
+const brandColor = computed<string>(
 	() => speaker.project.brandColor ?? blankColor
 );
 
-const backgroundColor = $computed(() => brandColor + '1f');
+const backgroundColor = computed(() => brandColor.value + '1f');
 
-const borderColor = $computed(() => brandColor + '33');
+const borderColor = computed(() => brandColor.value + '33');
 
-const innerBorderColor = $computed(() => brandColor + 'bb');
+const innerBorderColor = computed(() => brandColor.value + 'bb');
 </script>
 
 <template>

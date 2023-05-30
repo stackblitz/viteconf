@@ -10,7 +10,7 @@ const screenName = route.params.username as string;
 const username = screenName.toLowerCase() as keyof typeof speakers;
 const framework = route.params.framework as Framework;
 
-const isSpecial = $computed(() => username in speakers || username in mcs);
+const isSpecial = computed(() => username in speakers || username in mcs);
 
 const isBlankTicket = screenName === '_';
 
@@ -37,12 +37,12 @@ screenCheck: if (screenName && !isSpecial) {
 		<EcosystemBackgroundOG x="480px" y="720px" />
 		<div class="frame">
 			<div class="ticket-container">
-				<div class="ticket-inner" ref="{ticketInnerRef}">
+				<div class="ticket-inner">
 					<Ticket
 						:og="true"
-						:force-show-framework-logo="isBlankTicket || null"
-						:framework="isBlankTicket ? framework : null"
-						:speakerName="isSpecial ? username : null"
+						:force-show-framework-logo="isBlankTicket || undefined"
+						:framework="isBlankTicket ? framework : undefined"
+						:speakerName="isSpecial ? username : undefined"
 					></Ticket>
 				</div>
 			</div>
@@ -56,15 +56,14 @@ screenCheck: if (screenName && !isSpecial) {
 	display: grid;
 	align-items: center;
 	justify-items: center;
-	width: 2400px;
+	width: 1200px;
 	height: 1200px;
 }
 
 .ticket-container {
-	height: 375px;
-	width: 800px;
-	perspective: 40px;
-	transform: scale(2.7) translate(0px, 5px); // scale(1.45) translate(0px,5px);
+	height: 650px;
+	width: 400px;
+	transform: scale(1.7);
 }
 .ticket-inner {
 	height: 100%;

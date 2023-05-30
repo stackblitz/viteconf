@@ -7,31 +7,35 @@ import ShareIcon from '~icons/mdi/timeline-clock';
 
 const smiggetEl = ref<HTMLDivElement>();
 
-let opaqueUserActions = $ref(false);
+const opaqueUserActions = ref(false);
 useIntersectionObserver(
 	smiggetEl,
-	([{ isIntersecting }]) => (opaqueUserActions = !isIntersecting)
+	([{ isIntersecting }]) => (opaqueUserActions.value = !isIntersecting)
 );
 
-const chatOpen = $(useChatOpen());
-const full = $(useFullLogo());
-const time = $(useReplayCurrentTime());
+const chatOpen = useChatOpen();
+const full = useFullLogo();
+const time = useReplayCurrentTime();
 
-let copiedToClipboard = $ref<string>();
+const copiedToClipboard = ref<string | null>();
 
-function timeToHHMMSS(time) {
-  const hours = Math.floor(time/(60*60));
-  const minutes = Math.floor(time/60) - hours*60;
-  const seconds = Math.floor(time) - hours*60*60 - minutes*60;
-  return `${hours ? `${hours}h` : ''}${minutes ? `${minutes}m` : ''}${seconds}s`;
+function timeToHHMMSS(time: number) {
+	const hours = Math.floor(time / (60 * 60));
+	const minutes = Math.floor(time / 60) - hours * 60;
+	const seconds = Math.floor(time) - hours * 60 * 60 - minutes * 60;
+	return `${hours ? `${hours}h` : ''}${
+		minutes ? `${minutes}m` : ''
+	}${seconds}s`;
 }
 
 function copyUrl() {
-	const shareURL = `https://viteconf.org/2022/replay/${timeToHHMMSS(time)}`;
+	const shareURL = `https://viteconf.org/2022/replay/${timeToHHMMSS(
+		time.value
+	)}`;
 	navigator.clipboard.writeText(shareURL);
-	copiedToClipboard = shareURL;
+	copiedToClipboard.value = shareURL;
 	setTimeout(() => {
-		copiedToClipboard = null;
+		copiedToClipboard.value = null;
 	}, 2000);
 }
 </script>
@@ -59,13 +63,23 @@ function copyUrl() {
 				class="social-button copy-url"
 				@click="copyUrl"
 			>
-				<span><ShareIcon style="transform: scale(1.1);"/>{{ copiedToClipboard ? `Copied` : `Copy URL` }}</span>
+				<span
+					><ShareIcon style="transform: scale(1.1)" />{{
+						copiedToClipboard ? `Copied` : `Copy URL`
+					}}</span
+				>
 			</button>
-			<a target="_blank" class="social-button subscribe" href="https://www.youtube.com/channel/UCXXpIonjN9ATkXjOJsOwvjg?sub_confirmation=1"
-				><span><YouTubeIcon style="transform: scale(1.2);"/>Subscribe</span></a
+			<a
+				target="_blank"
+				class="social-button subscribe"
+				href="https://www.youtube.com/channel/UCXXpIonjN9ATkXjOJsOwvjg?sub_confirmation=1"
+				><span><YouTubeIcon style="transform: scale(1.2)" />Subscribe</span></a
 			>
-			<a target="_blank" class="social-button join-discord" href="https://chat.vitejs.dev"
-				><span><DiscordIcon/>Join Discord</span></a
+			<a
+				target="_blank"
+				class="social-button join-discord"
+				href="https://chat.vitejs.dev"
+				><span><DiscordIcon />Join Discord</span></a
 			>
 			<button
 				title="Toggle Chat"
@@ -88,7 +102,8 @@ span.stackblitz {
 	opacity: 0;
 	transition: opacity 0.5s ease-in-out;
 }
-.full span.stackblitz, .logo:hover span.stackblitz {
+.full span.stackblitz,
+.logo:hover span.stackblitz {
 	color: white;
 	opacity: 1;
 	@media screen and (max-width: 600px) {
@@ -157,7 +172,8 @@ button {
 	margin-left: 1rem;
 	filter: sepia(1) hue-rotate(245deg) brightness(0.6) saturate(0.9);
 }
-.full .logo, .logo:hover {
+.full .logo,
+.logo:hover {
 	filter: none;
 }
 
@@ -301,7 +317,8 @@ button.discord-button:hover {
 	background-color: #fff2;
 }
 
-.actions a span, .actions button span {
+.actions a span,
+.actions button span {
 	display: flex;
 	flex-direction: row;
 	gap: 0.5rem;
@@ -313,12 +330,14 @@ button.discord-button:hover {
 }
 
 @media screen and (max-width: $breakpoint-md) {
-	.actions .join-discord, .actions .discord-button {
+	.actions .join-discord,
+	.actions .discord-button {
 		display: none;
 	}
 }
 @media screen and (max-width: 1000px) {
-	.actions .subscribe, .actions .copy-url {
+	.actions .subscribe,
+	.actions .copy-url {
 		display: none;
 	}
 }

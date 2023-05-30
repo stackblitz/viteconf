@@ -1,11 +1,12 @@
 import { createBlankTicket } from '@@/helpers/utils';
 import { User as FirebaseUser } from 'firebase/auth';
 
-export const useFirebaseUser = () => useState<FirebaseUser | null>('firebaseUser', () => null);
+export const useFirebaseUser = () =>
+	useState<FirebaseUser | null>('firebaseUser', () => null);
 
 export type User = {
-	uid: string
-}
+	uid: string;
+};
 export const useUser = () => useState<User | null>('user', () => null);
 
 export const useFirebaseUserInit = () =>
@@ -27,15 +28,16 @@ export function hideFullLogo() {
 
 export const usePlayerVideo = () => useState('playerVideo', () => null);
 
-export const useReplayCurrentTime = () => useState('replayCurrentTime', () => 0);
+export const useReplayCurrentTime = () =>
+	useState('replayCurrentTime', () => 0);
 
 export function skipToTalk(talk) {
-	const player = $(usePlayerVideo())
+	const player = usePlayerVideo();
 	if (player) {
-		const { key, time } = talk
-		window.history?.replaceState({ key },'',`/2022/replay/${key}`)
-		player.seekTo(time);
-		player.playVideo()
+		const { key, time } = talk;
+		window.history?.replaceState({ key }, '', `/2022/replay/${key}`);
+		player.value.seekTo(time);
+		player.value.playVideo();
 		window.scrollTo(0, 0);
 	}
 }

@@ -34,7 +34,7 @@ const signupPage = `https://viteconf.org/tickets/${screenName}`;
 
 const showOptions = useShowAfterUserInit(600);
 
-const isMyTicket = $computed(
+const isMyTicket = computed(
 	() => user.value && user.value.uid === ticket.value?.uid
 );
 </script>
@@ -128,7 +128,7 @@ main {
 	margin: 0;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 54% 20% 24%;
+	grid-template-rows: 780px auto auto;
 	grid-template-areas:
 		'ticket'
 		'sharing'
@@ -137,13 +137,10 @@ main {
 	align-items: center;
 	gap: 1em;
 	padding: 1em;
-	height: calc(100vh - 40px);
-	min-height: 740px;
-	max-height: 1200px;
 	position: relative;
 	// vertical
 	@media screen and (max-height: 800px) {
-		grid-template-rows: 62% 22% auto;
+		grid-template-rows: 780px auto auto;
 		min-height: 692px;
 	}
 	@media screen and (max-height: 740px) {
