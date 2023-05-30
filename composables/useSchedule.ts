@@ -1,4 +1,12 @@
-import { talks, glue, schedule, startDateTime } from '~~/conference';
+import {
+	talks,
+	glue,
+	schedule,
+	startDateTime,
+	speakers,
+	mcs,
+} from '~~/conference';
+import type { SpeakerData } from '~~/conference';
 import { talkTitleToSlug } from '~~/helpers/utils';
 
 function useCurrentReplayDate() {
@@ -19,7 +27,7 @@ export function usePlayerCurrentSchedule(
 		...section,
 		talks: section.talks.map((talk) => ({
 			...talk,
-			start: new Date(+talk.start + /** +12 hours */ 1000 * 60 * 60 * 12),
+			start: new Date(+talk.start! + /** +12 hours */ 1000 * 60 * 60 * 12),
 		})),
 	}));
 
@@ -32,11 +40,11 @@ export function usePlayerCurrentSchedule(
 		.flat(1);
 
 	// Show only the first 12 hour talks only
-	const firstTalkTime = allTalks[0].start;
+	const firstTalkTime = allTalks[0].start!;
 	const talks = options.live
 		? allTalks.filter(
 				(talk) =>
-					talk.start <=
+					talk.start! <=
 					new Date(
 						Math.max(+new Date(), +firstTalkTime) +
 							/** +12 hours */ 1000 * 60 * 60 * 12
@@ -46,7 +54,7 @@ export function usePlayerCurrentSchedule(
 
 	// Split schedule up by current time
 	const talksDone = computed(() =>
-		talks.filter((talk) => +talk.start <= +currentTime)
+		talks.filter((talk) => +talk.start! <= +currentTime.value)
 	);
 
 	const upcomingTalks = computed(() => talks.slice(talksDone.value.length));
@@ -58,7 +66,7 @@ export function usePlayerCurrentSchedule(
 	return { previousTalk, currentTalk, nextTalk, upcomingTalks };
 }
 
-function matchSpeaker(speaker, marker: string) {
+function matchSpeaker(speaker: SpeakerData, marker: string) {
 	return (
 		speaker.screenName.toLowerCase() === marker ||
 		speaker.twitter?.toLowerCase() === marker
@@ -72,6 +80,7 @@ export function useTalkFromRoute() {
 	if (!queryMarker) {
 		return;
 	}
+	// @ts-ignore
 	return (
 		talks[queryMarker] ??
 		glue[queryMarker] ??
@@ -86,4 +95,14 @@ export function useTalkFromRoute() {
 			return talk.participants?.find((p) => matchSpeaker(p, queryMarker));
 		})
 	);
+}
+
+export function userIsSpeaker(screenName: string) {
+	// @ts-ignore
+	return !!speakers[screenName];
+}
+
+export function userIsMC(screenName: string) {
+	// @ts-ignore
+	return !!mcs[screenName];
 }

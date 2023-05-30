@@ -1,5 +1,6 @@
 import { createBlankTicket } from '@@/helpers/utils';
 import { User as FirebaseUser } from 'firebase/auth';
+import { TalkData } from '~/conference';
 
 export const useFirebaseUser = () =>
 	useState<FirebaseUser | null>('firebaseUser', () => null);
@@ -26,12 +27,12 @@ export function hideFullLogo() {
 	}, 5000);
 }
 
-export const usePlayerVideo = () => useState('playerVideo', () => null);
+export const usePlayerVideo = () => useState<any>('playerVideo', () => null);
 
 export const useReplayCurrentTime = () =>
 	useState('replayCurrentTime', () => 0);
 
-export function skipToTalk(talk) {
+export function skipToTalk(talk: TalkData) {
 	const player = usePlayerVideo();
 	if (player) {
 		const { key, time } = talk;

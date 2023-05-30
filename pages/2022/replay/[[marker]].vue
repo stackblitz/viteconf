@@ -6,6 +6,7 @@ const talk = useTalkFromRoute();
 useReplayHead(talk);
 
 onMounted(() => {
+	// @ts-ignore
 	import('@widgetbot/html-embed');
 
 	if (upcomingTalks.value.length > 0) {

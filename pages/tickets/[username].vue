@@ -6,6 +6,7 @@ const screenName = route.params.username as keyof typeof speakers;
 const username = screenName.toLowerCase();
 const original = route.query.original !== undefined;
 
+// @ts-ignore
 if (!original && speakers[username] && !speakers[username].showOriginal) {
 	navigateTo('/speaker/' + username);
 	globalThis?.window?.scrollTo(0, 0);
@@ -14,6 +15,7 @@ if (!original && speakers[username] && !speakers[username].showOriginal) {
 const ticket = useTicket();
 try {
 	const loadedTicket = await getTicketInfo(screenName);
+	// @ts-ignore
 	if (loadedTicket === null && !mcs[username]) {
 		navigateTo('/');
 	}
@@ -26,7 +28,8 @@ const user = useUser();
 
 if (ticket.value) {
 	useTicketHead(ticket.value);
-} else if (mcs[username]) {
+} // @ts-ignore
+else if (mcs[username]) {
 	useMCHead(screenName);
 }
 
@@ -69,9 +72,9 @@ const isMyTicket = computed(
 									`${
 										ticket?.displayName ? ticket.displayName : screenName
 									} is ${
-										speakers[username]
+										userIsSpeaker(username)
 											? 'speaking at'
-											: mcs[username]
+											: userIsMC(username)
 											? 'MCing at'
 											: 'attending'
 									} ViteConf!`

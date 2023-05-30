@@ -19,9 +19,6 @@ const socialImageUrl = getTicketSocialImageUrl('_', framework);
 
 useHead({
 	title,
-	description,
-	viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-	charset: 'utf-8',
 	link: [{ rel: 'icon', href: '/images/viteconf.svg' }],
 	meta: [
 		{ name: 'description', content: description },

@@ -8,7 +8,7 @@ let tQuery = (
 	(route.query.t as string) ?? (route.params.marker as string)
 )?.toLowerCase();
 function tExtract(t: string, re: RegExp) {
-	return +t.match(re)?.[1] ?? 0;
+	return +(t.match(re)?.[1] ?? 0);
 }
 function tToSeconds(t: string) {
 	const hours = tExtract(t, /(\d+)h/);
@@ -20,11 +20,11 @@ function tToSeconds(t: string) {
 
 onMounted(() => {
 	// 2. This code loads the IFrame Player API code asynchronously.
-	let tag = document.createElement('script');
+	const tag = document.createElement('script');
 
 	tag.src = 'https://www.youtube.com/iframe_api';
-	let firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	const firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
 
 	// 3. This function creates an <iframe> (and YouTube player)
 	//    after the API code downloads.
@@ -35,7 +35,7 @@ onMounted(() => {
 		}, 500);
 	}
 	let done = false;
-	function onStateChange(event) {
+	function onStateChange(event: any) {
 		if (event.data === 0) {
 			// video ended
 			replayCurrentTime.value = 12 * 60 * 60 * 3600 + 1;
@@ -45,7 +45,9 @@ onMounted(() => {
 		}
 	}
 
+	// @ts-ignore
 	window.onYouTubeIframeAPIReady = () => {
+		// @ts-ignore
 		player.value = new YT.Player('player', {
 			height: '730',
 			width: '1120',

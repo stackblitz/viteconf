@@ -50,7 +50,7 @@ const speakerCompanyText = (speaker: SpeakerData): string[] => {
 		company,
 		project: { name: projectName },
 	} = speaker;
-	const simplify = (string) => string.split(' ').join('');
+	const simplify = (s: string) => s.split(' ').join('');
 	const text = [];
 	// projectName only
 	if (
@@ -197,7 +197,7 @@ const username = computed(() => speaker.screenName.toLowerCase());
 						<span class="title">{{ speaker.talk?.title }}</span>
 					</NuxtLink>
 				</li>
-				<li v-if="speaker.extra && speaker.extra.title !== speaker.talk.title">
+				<li v-if="speaker.extra && speaker.extra.title !== speaker.talk?.title">
 					<NuxtLink
 						class="project"
 						:href="scheduleLinkFromTalkTitle(speaker.extra.title)"

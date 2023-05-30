@@ -160,9 +160,9 @@ const talkLocalStartTime = computed(() => {
 						v-bind:key="i"
 						style="cursor: pointer"
 						:to="
-							speakers[participant?.screenName]
-								? `/speakers/${participant?.screenName}`
-								: `/tickets/${participant?.screenName}`
+							userIsSpeaker(participant.screenName)
+								? `/speakers/${participant.screenName}`
+								: `/tickets/${participant.screenName}`
 						"
 						class="speaker"
 					>
@@ -172,9 +172,9 @@ const talkLocalStartTime = computed(() => {
 				<template v-else>
 					<NuxtLink
 						:to="
-							speakers[talk.speaker?.screenName]
-								? `/speakers/${talk.speaker?.screenName}`
-								: `/tickets/${talk.speaker?.screenName}`
+							userIsSpeaker(talk.speaker!.screenName)
+								? `/speakers/${talk.speaker!.screenName}`
+								: `/tickets/${talk.speaker!.screenName}`
 						"
 						style="cursor: pointer"
 						class="speaker"

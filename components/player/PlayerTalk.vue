@@ -49,7 +49,7 @@ function getDiscordChatLink() {
 	}`;
 }
 
-let timeout;
+let timeout: ReturnType<typeof setTimeout>;
 function toggleDiscordProtocol() {
 	discordProtocol.value = !discordProtocol.value;
 	showMode.value = true;

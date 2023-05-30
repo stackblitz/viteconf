@@ -1651,17 +1651,12 @@ function advanceSeconds(date: Date, seconds: number) {
 	return new Date(date.getTime() + seconds * 1000);
 }
 
-function augmentSchedule(schedule: ScheduleData[]) {
+function augmentSchedule(schedule: ScheduleData[]): ScheduleData[] {
 	return schedule.map((section) => {
-		if (!section) return;
-
 		return {
 			...section,
 			talks: section.talks.map((talk) => {
-				if (!talk) return;
-
 				talk.start = advanceSeconds(startDateTime, talk.time!);
-
 				return talk;
 			}),
 		};

@@ -56,13 +56,20 @@ const speakerInfo = computed<SpeakerData>(() => {
 		ticket.value && ticket.value.ticketNumber > 0
 			? ticket.value.screenName?.toLocaleLowerCase()
 			: speakerName;
+	if (!name) return;
+
+	// @ts-ignore
 	return speakers[name] ?? mcs[name];
 });
 
 const isSpecial = computed(
 	() => !!speakerInfo.value && !speakerInfo.value.showOriginal
 );
-const isMC = computed(() => isSpecial.value && !speakers[speakerName]);
+
+// @ts-ignore
+const isMC = computed(
+	() => isSpecial.value && !(speakerName && speakers[speakerName])
+);
 
 // In case its a speaker who hasn't registered yet
 if (
@@ -101,12 +108,14 @@ const framework = computed(() => {
 });
 
 const frameworkColor = computed<string>(() => {
+	// @ts-ignore
 	const color =
 		projects[framework.value.toLowerCase()]?.brandColor ?? blankColor;
 	return color;
 });
 
 const frameworkPlayground = computed(() => {
+	// @ts-ignore
 	const project = projects[framework.value.toLowerCase()];
 	return project?.playground ?? project?.url ?? `https://vite.new`;
 });
@@ -141,6 +150,11 @@ const displayName = computed(() => {
 	} else {
 		return ticket.value?.displayName;
 	}
+});
+
+const projectLogo = computed(() => {
+	// @ts-ignore
+	return projects[framework.value.toLowerCase()]?.logo;
 });
 </script>
 
@@ -177,8 +191,7 @@ const displayName = computed(() => {
 						:src="
 							isSpecial
 								? '/images/viteconf.svg'
-								: projects[framework.toLowerCase()]?.logo ??
-								  `/projects/${framework.toLowerCase()}.svg`
+								: projectLogo ?? `/projects/${framework.toLowerCase()}.svg`
 						"
 					/>
 				</a>
@@ -211,7 +224,7 @@ const displayName = computed(() => {
 								:href="
 									ticket?.screenName !== 'username'
 										? `https://github.com/${ticket?.screenName}`
-										: null
+										: undefined
 								"
 								target="_blank"
 								class="screen-name"
