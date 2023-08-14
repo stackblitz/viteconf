@@ -338,8 +338,8 @@ export const projects = getTypedProjects({
 		brandColor: '#34b27b',
 	},
 	dashibase: {
-		name: 'supabase',
-		url: 'https://supabase.com/',
+		name: 'Dashibase',
+		url: 'https://dashibase.com/',
 		brandColor: '#FF6069',
 	},
 	mui: {
